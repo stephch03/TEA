@@ -2,19 +2,37 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.Employee;
 
 public class Timesheet {
 
-    private List<Employee> database;
-    private boolean isApproved;
+    private List<Integer> hours;
+    private int daysRemaining;
+    private int totalHours;
 
-    public Timesheet() {
-        database = new ArrayList<>();
-        isApproved = false;
+
+    public Timesheet(Employee e) {
     }
 
-    public void approve(String name) {
-        isApproved = true;
+    public void updateTimesheet(Employee e, int hoursWorkedToday) {
+    }
+
+    public void reset(Employee e) {
+    }
+
+    public void nextDay() {
+    }
+
+    //getters
+
+    public List<Employee> getEmployees() {
+        return null;
+    }
+
+    public int getDaysRemaining() {
+        return 0;
+    }
+
+    public int getHoursWorked(Employee employee) {
+        return 0;
     }
 }

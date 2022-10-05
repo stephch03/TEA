@@ -1,28 +1,29 @@
 package model;
 
+import model.Timesheet;
+
 public class Employee {
     private String name;
-    private int age;
-    private boolean isManager;
-    private int wage;
+    private boolean isApproved;
+    private double wage;
 
-    public Employee(String name, int age, boolean isManager, int wage) {
+    //REQUIRES: wage >= 15.65
+    //MODIFIES: this
+    //EFFECTS: creates a new employee with their name, age, whether they are a manager, and wage
+    public Employee(String name, boolean isApproved, double initialWage) {
         this.name = name;
-        this.age = age;
-        this.isManager = isManager;
-        this.wage = wage;
+        this.isApproved = isApproved;
+        this.wage = initialWage;
     }
 
-    public void createEmployee(String name, int age, boolean isManager, int wage) {
-        Employee e = new Employee(name, age, isManager, wage);
-        e.name = name;
-        e.age = age;
-        e.isManager = isManager;
-        e.wage = wage;
+    //MODIFIES: this
+    //EFFECTS: approve the employee's hours
+    public void approve(boolean approved) {
+        isApproved = approved;
     }
 
-    public void removeEmployee(String name) {
-        //stub
+    public void updateWage(double newWage) {
+        wage = newWage;
     }
 
     // getters
@@ -31,15 +32,11 @@ public class Employee {
         return name;
     }
 
-    public int getAge() {
-        return age;
+    public boolean approvalStatus() {
+        return isApproved;
     }
 
-    public boolean isManager() {
-        return isManager;
-    }
-
-    public int getWage() {
+    public double getWage() {
         return wage;
     }
 }
