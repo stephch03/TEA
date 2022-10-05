@@ -11,15 +11,19 @@ public class Timesheet {
 
 
     public Timesheet(Employee e) {
+        hours = new ArrayList<>();
     }
 
-    public void updateTimesheet(Employee e, int hoursWorkedToday) {
+    public void updateTimesheet(int hoursWorkedToday) {
+        hours.add(hoursWorkedToday);
     }
 
     public void reset(Employee e) {
+        daysRemaining = 14;
     }
 
     public void nextDay() {
+        daysRemaining = getDaysRemaining() - 1;
     }
 
     public void removeEmployee(String name) {
@@ -33,10 +37,14 @@ public class Timesheet {
     }
 
     public int getDaysRemaining() {
-        return 0;
+        return daysRemaining;
     }
 
     public int getHoursWorked(Employee employee) {
-        return 0;
+        int sumHours = 0;
+        for (int i = 0; i < hours.size(); i++) {
+            sumHours = sumHours + hours.get(i);
+        }
+        return sumHours;
     }
 }

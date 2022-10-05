@@ -29,6 +29,7 @@ class TimesheetTest {
 
     @Test
     public void reset() {
+        daysRemaining = 14;
     }
 
     // delete or rename this class!
