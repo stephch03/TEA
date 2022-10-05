@@ -22,6 +22,10 @@ public class Timesheet {
     public void nextDay() {
     }
 
+    public void removeEmployee(String name) {
+
+    }
+
     //getters
 
     public List<Employee> getEmployees() {

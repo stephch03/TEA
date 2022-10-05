@@ -1,5 +1,4 @@
 package model;
-
 import model.Timesheet;
 import model.Employee;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,24 +6,29 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EmployeeTest {
+class TimesheetTest {
 
-    Employee employeeTest;
+    Timesheet timesheetTest;
+    int daysRemaining;
+    Employee e = new Employee("Ada Lovelace", 15.65);
 
     @BeforeEach
     public void setup(){
-        employeeTest = new Employee("Ada Lovelace", 15.65);
+        timesheetTest = new Timesheet(e);
+
     }
 
     @Test
-    public void removeEmployeeTest(){
+    public void removeEmployeeTest() {
     }
 
     @Test
-    public void updateWageTest() {
-        employeeTest.updateWage(18.00);
-        assertEquals(employeeTest.getWage(), 18.00);
+    public void updateTimesheetTest() {
 
+    }
+
+    @Test
+    public void reset() {
     }
 
     // delete or rename this class!
