@@ -10,16 +10,10 @@ public class Timesheet {
     private int totalHours;
 
 
-    public Timesheet(Employee e) {
-        hours = new ArrayList<>();
-    }
-
-    public void updateTimesheet(int hoursWorkedToday) {
-        hours.add(hoursWorkedToday);
-    }
 
     public void reset(Employee e) {
         daysRemaining = 14;
+        // reset lists
     }
 
     public void nextDay() {
