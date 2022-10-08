@@ -5,24 +5,33 @@ import java.util.List;
 
 public class EmployeeDatabase {
 
-    private ArrayList<Employee> employeeList;
+    private ArrayList<Employee> database = new ArrayList<Employee>();
 
-    public EmployeeDatabase(ArrayList<Employee> employeeList) {
-        this.employeeList = employeeList;
+    public EmployeeDatabase(ArrayList<Employee> database) {
+        this.database = database;
+    }
+
+    public void addNewEmployee(String name) {
+        Employee e = new Employee(name);
+        database.add(e);
     }
 
     public void reset() {
-//        for (Employee e : employeeList)
-//            e.hours.clear();
-        //TODO use for loop and counter will set empty list using index
+        database.clear();
     }
 
     public void remove(String name) {
-        //filter
+        database.remove(name);
     }
 
-    public int findEmployee(String name) {
+    public int getEmployee(String name) {
+//        for (Employee e : database)
         return 0;
         //Filter name and use gethours
     }
+
+    public ArrayList<Employee> getDatabase() {
+        return database;
+    }
+
 }
