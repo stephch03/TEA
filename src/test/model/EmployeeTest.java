@@ -1,36 +1,48 @@
 package model;
 
-import model.Timesheet;
-import model.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeTest {
 
     Employee employeeTest;
+    List<Integer> hoursTest;
 
     @BeforeEach
     public void setup() {
-        employeeTest = new Employee("Ada Lovelace", 15.65, null);
+        employeeTest = new Employee("Ada Lovelace", 17.00);
+        hoursTest = new ArrayList<>();
+        hoursTest.add(5);
+        hoursTest.add(0);
     }
 
     @Test
-    public void updateHoursTest() {
-        employeeTest.updateHours(5);
-        assertEquals(employeeTest.getHours().size(), 1);
-        assertTrue(employeeTest.getHours().contains(5));
+    public void inputHoursTest() {
+        hoursTest.add(7);
+        employeeTest.inputHours(7);
+        assertEquals(hoursTest.size(), 3);
+        assertEquals(hoursTest.get(0), 5);
+        assertEquals(hoursTest.get(1), 0);
+        assertEquals(hoursTest.get(2), 7);
     }
 
 //    @Test
-//    public void changeHoursTest(){
-//        employeeTest.hours.add(5);
+//    public void updateHoursTest(){
+//        //TODO how to make hoursTest = hours
+//        assertEquals(hoursTest.size(), 2);
+//        hoursTest.set(0,2);
+//        employeeTest.updateHours(1,2);
+//        assertEquals(hoursTest.get(0), 2);
+//        assertEquals(hoursTest.get(1), 0);
 //    }
 
     @Test
     public void updateWageTest() {
         employeeTest.updateWage(18.00);
         assertEquals(employeeTest.getWage(), 18.00);
-
     }
 }

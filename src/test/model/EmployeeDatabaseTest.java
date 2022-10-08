@@ -5,9 +5,9 @@ import java.util.Arrays;
 
 class EmployeeDatabaseTest {
 
-    EmployeeDatabase databaseTest;
-    int daysRemaining;
-    Employee e = new Employee("Ada Lovelace", 15.65, Arrays.asList(1,5,0));
+//    EmployeeDatabase databaseTest;
+//    int daysRemaining;
+//    databaseTest d = new Database(("Ada Lovelace", 15.65, null);
 
 //    @BeforeEach
 //    public void setup(){
@@ -15,21 +15,20 @@ class EmployeeDatabaseTest {
 //
 //    }
 
-
-    @Test
-    public void removeEmployeeTest() {
-    }
-
-    @Test
-    public void updateTimesheetTest() {
-
-    }
-
-    @Test
-    public void reset() {
-        daysRemaining = 14;
-
-    }
-
-    // delete or rename this class!
+//
+//    @Test
+//    public void removeEmployeeTest() {
+//    }
+//
+//    @Test
+//    public void updateTimesheetTest() {
+//
+//    }
+//
+//    @Test
+//    public void reset() {
+//        databaseTest.reset();
+//        get
+//        AssertEquals(getDaysRemaining(), 14);
+//    }
 }

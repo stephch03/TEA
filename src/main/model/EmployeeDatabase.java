@@ -1,13 +1,14 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDatabase {
 
-    private List<Employee> employeeList;
+    private ArrayList<Employee> employeeList;
 
-    public EmployeeDatabase(List<Employee> employeeList) {
-
+    public EmployeeDatabase(ArrayList<Employee> employeeList) {
+        this.employeeList = employeeList;
     }
 
     public void reset() {

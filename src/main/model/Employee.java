@@ -1,45 +1,38 @@
 package model;
 
-import model.Timesheet;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Employee {
     private String name;
     private double wage;
-    private ArrayList<Integer> hours;
+    private List<Integer> hours = new ArrayList<>();
     private static final double MINIMUM_WAGE = 15.65;
+    private int totalHours;
+
 
     //REQUIRES: initialWage >= MINIMUM_WAGE
     //MODIFIES: this
-    //EFFECTS: creates a new employee with their first and last name, wage, and list of hours worked in pay period
-    public Employee(String name, double initialWage, List<Integer> hours) {
+    //EFFECTS: creates a new employee with their first and last name and starting wage
+    public Employee(String name, double initialWage) {
         this.name = name;
         this.wage = initialWage;
-        this.hours = new ArrayList<Integer>(hours);
     }
-
-//    //REQUIRES: isApproved = false
-//    //MODIFIES: this
-//    //EFFECTS: approve the employee's hours
-//    public void approve(boolean approved) {
-//        isApproved = approved;
-//    }
 
     //REQUIRES: hoursWorkedToday >= 0
     //MODIFIES: Employee hours
     //EFFECTS: adds hours worked today to list of hours worked so far
-    public void updateHours(int hoursWorkedToday) {
+    public void inputHours(int hoursWorkedToday) {
         hours.add(hoursWorkedToday);
     }
 
     //REQUIRES: day <= size of hours
     //MODIFIES: Employee hours
     //EFFECTS: changes the hours worked on the given day number of the work period
-    public void changeHours(int day, int newHours) {
-        hours.set(day - 1, newHours);
+    public void updateHours(int day, int newHours) {
+        hours.set(day, newHours);
     }
+
 
     //REQUIRES: newWage > MINIMUM_WAGE
     //MODIFIES: Employee wage
@@ -58,7 +51,15 @@ public class Employee {
         return wage;
     }
 
-    public ArrayList getHours() {
+    public List<Integer> getHours() {
         return hours;
+    }
+
+    public int getHoursWorked() {
+        totalHours = 0;
+        for (int i = 0; i < hours.size(); i++) {
+            totalHours = totalHours + hours.get(i);
+        }
+        return totalHours;
     }
 }
