@@ -14,10 +14,12 @@ class EmployeeTest {
 
     @BeforeEach
     public void setup() {
-        employeeTest = new Employee("Ada Lovelace", 17.00);
+        employeeTest = new Employee("Ada Lovelace", 0);
         hoursTest = new ArrayList<>();
         hoursTest.add(5);
         hoursTest.add(0);
+        employeeTest.getHours().add(5);
+        employeeTest.getHours().add(5);
     }
 
     @Test
@@ -30,15 +32,15 @@ class EmployeeTest {
         assertEquals(hoursTest.get(2), 7);
     }
 
-//    @Test
-//    public void updateHoursTest(){
-//        //TODO how to make hoursTest = hours
-//        assertEquals(hoursTest.size(), 2);
-//        hoursTest.set(0,2);
-//        employeeTest.updateHours(1,2);
-//        assertEquals(hoursTest.get(0), 2);
-//        assertEquals(hoursTest.get(1), 0);
-//    }
+    @Test
+    public void updateHoursTest(){
+        assertEquals(hoursTest.size(), 2);
+        employeeTest.getHours().set(0,2);
+        hoursTest.set(0,2);
+        employeeTest.updateHours(1,2);
+        assertEquals(hoursTest.get(0), 2);
+        assertEquals(hoursTest.get(1), 0);
+    }
 
     @Test
     public void updateWageTest() {

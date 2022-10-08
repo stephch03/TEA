@@ -16,4 +16,13 @@ public class EmployeeDatabase {
 //            e.hours.clear();
         //TODO use for loop and counter will set empty list using index
     }
+
+    public void remove(String name) {
+        //filter
+    }
+
+    public int findEmployee(String name) {
+        return 0;
+        //Filter name and use gethours
+    }
 }

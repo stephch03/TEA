@@ -14,28 +14,28 @@ public class Employee {
     //REQUIRES: initialWage >= MINIMUM_WAGE
     //MODIFIES: this
     //EFFECTS: creates a new employee with their first and last name and starting wage
-    public Employee(String name, double initialWage) {
+    public Employee(String name, int totalHours) {
         this.name = name;
-        this.wage = initialWage;
+        this.totalHours = totalHours;
+
     }
 
     //REQUIRES: hoursWorkedToday >= 0
-    //MODIFIES: Employee hours
+    //MODIFIES: hours
     //EFFECTS: adds hours worked today to list of hours worked so far
     public void inputHours(int hoursWorkedToday) {
         hours.add(hoursWorkedToday);
     }
 
     //REQUIRES: day <= size of hours
-    //MODIFIES: Employee hours
+    //MODIFIES: hours
     //EFFECTS: changes the hours worked on the given day number of the work period
     public void updateHours(int day, int newHours) {
         hours.set(day, newHours);
     }
 
-
     //REQUIRES: newWage > MINIMUM_WAGE
-    //MODIFIES: Employee wage
+    //MODIFIES: this
     //EFFECTS: changes the employee's current wage
     public void updateWage(double newWage) {
         wage = newWage;
@@ -61,5 +61,6 @@ public class Employee {
             totalHours = totalHours + hours.get(i);
         }
         return totalHours;
+        // get Name for loopp until the name is equal to the one yo8're looking for and then call get HoursWorked
     }
 }
