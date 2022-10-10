@@ -7,6 +7,10 @@ public class Employee {
     private String name;
     private ArrayList<Integer> hours = new ArrayList<>();
     private static final double MINIMUM_WAGE = 15.65;
+    private static final int MAX_HOURS_PER_SHIFT = 8;
+    private int overtime;
+    // checks if hours worked in a day is over MAX_HOURS_PER_SHIFT, if so, add to overtime
+    //
     private int totalHours;
 
 
@@ -49,6 +53,7 @@ public class Employee {
             totalHours = totalHours + hours.get(i);
         }
         return totalHours;
+        // test getHoursWorked on hours
         // get Name for loop until the name is equal to the one yo8=u're looking for and then call get HoursWorked
     }
 }

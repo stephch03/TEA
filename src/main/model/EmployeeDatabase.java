@@ -1,17 +1,17 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class EmployeeDatabase {
 
-    private ArrayList<Employee> database = new ArrayList<Employee>();
+    private ArrayList<Employee> database = new ArrayList<>();
 
-    public EmployeeDatabase(ArrayList<Employee> database) {
+    public EmployeeDatabase() {
+        ArrayList<Employee> database = new ArrayList<>();
         this.database = database;
     }
 
-    public void addNewEmployee(String name) {
+    public void addEmployee(String name) {
         Employee e = new Employee(name);
         database.add(e);
     }
@@ -20,18 +20,31 @@ public class EmployeeDatabase {
         database.clear();
     }
 
-    public void remove(String name) {
-        database.remove(name);
+    public void removeEmployee(Employee e) {
+        database.remove(e);
     }
 
     public int getEmployee(String name) {
-//        for (Employee e : database)
+//        while (getName.)
         return 0;
         //Filter name and use gethours
     }
 
-    public ArrayList<Employee> getDatabase() {
-        return database;
+    //getters
+
+//    public ArrayList<Employee> getDatabase() {
+//        return database;
+//    }
+
+    public int getNumberOfEmployees() {
+        return database.size();
+    }
+
+//    public String getEmployee(){}
+
+    public int getEmployeeHoursWorked(Employee e) {
+        database.indexOf(e);
+        return 0;
     }
 
 }
