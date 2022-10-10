@@ -15,10 +15,11 @@ class EmployeeDatabaseTest {
         databaseTest.addEmployee(a.getName());
         Employee b = new Employee("Bob Builder");
         databaseTest.addEmployee(b.getName());
-        //        Employee a = new Employee("Ada Lovelace");
-        //        databaseTest.add(a);
-        //        Employee b = new Employee("Bob Builder");
-        //        databaseTest.add(b);
+    }
+
+    @Test
+    public void employeeDatabaseConstructorTest() {
+        assertEquals(databaseTest.getNumberOfEmployees(), 2);
     }
 
     @Test

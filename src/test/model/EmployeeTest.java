@@ -21,6 +21,13 @@ class EmployeeTest {
     }
 
     @Test
+    public void employeeConstructorTest(){
+        assertEquals(employeeTest.getName(), "Ada Lovelace");
+        assertEquals(hoursTest.size(), 2);
+
+    }
+
+    @Test
     public void inputHoursTest() {
         hoursTest.add(7);
         employeeTest.inputHours(7);
