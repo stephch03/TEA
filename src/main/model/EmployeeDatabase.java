@@ -16,8 +16,8 @@ public class EmployeeDatabase {
     //REQUIRES: name must be formatted as FirstName LastName
     //MODIFIES: this
     //EFFECTS: adds a new employee to the database
-    public void addEmployee(String name) {
-        Employee e = new Employee(name);
+    public void addEmployee(String name, int initialHours) {
+        Employee e = new Employee(name, initialHours);
         database.add(e);
     }
 

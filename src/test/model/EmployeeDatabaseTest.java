@@ -2,31 +2,41 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeDatabaseTest {
 
     EmployeeDatabase databaseTest;
+    ArrayList<Integer> adaHoursTest = new ArrayList<>();
+    ArrayList<Integer> bobHoursTest = new ArrayList<>();
+    ArrayList<Integer> emilyHoursTest = new ArrayList<>();
 
     @BeforeEach
     public void setup() {
         databaseTest = new EmployeeDatabase();
-        Employee a = new Employee("Ada Lovelace");
-        databaseTest.addEmployee(a.getName());
-        Employee b = new Employee("Bob Builder");
-        databaseTest.addEmployee(b.getName());
+        Employee a = new Employee("Ada Lovelace", 0);
+        adaHoursTest.add(0);
+        databaseTest.addEmployee(a.getName(), a.getHoursWorked(adaHoursTest));
+        Employee b = new Employee("Bob Builder", 0);
+        adaHoursTest.add(0);
+        databaseTest.addEmployee(b.getName(), b.getHoursWorked(bobHoursTest));
     }
 
     @Test
     public void employeeDatabaseConstructorTest() {
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
+//        assertEquals(databaseTest.findEmployee("Ada Lovelace").getHoursWorked(adaHoursTest), 0);
     }
 
     @Test
     public void addEmployeeTest() {
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
-        Employee e = new Employee("Emily Johnson");
-        databaseTest.addEmployee(e.getName());
+        Employee e = new Employee("Emily Johnson",5);
+        emilyHoursTest.add(5);
+        databaseTest.addEmployee(e.getName(), e.getHoursWorked(emilyHoursTest));
         assertEquals(databaseTest.getNumberOfEmployees(), 3);
     }
 
