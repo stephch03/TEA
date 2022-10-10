@@ -7,7 +7,7 @@ public class Employee {
     private ArrayList<Integer> hours = new ArrayList<>();
     private int hoursWorked;
 
-    //REQUIRES: name must be formatted as FirstName LastName, 0 <= hoursWorked
+    //REQUIRES: name must be formatted as FirstName LastName, hoursWorked = 0
     //EFFECTS: creates a new employee
     public Employee(String name, int hoursWorked) {
         this.name = name;
@@ -17,7 +17,7 @@ public class Employee {
     //REQUIRES: name must be formatted as FirstName LastName
     //MODIFIES: this
     //EFFECTS: changes the name of an employee
-    public void changeName(String newName) {
+    public void setName(String newName) {
         name = newName;
     }
 
@@ -49,10 +49,15 @@ public class Employee {
 
     public int getHoursWorked(ArrayList<Integer> hours) {
         this.hours = hours;
-        hoursWorked = 0;
-        for (int i = 0; i < hours.size(); i++) {
-            hoursWorked = hoursWorked + hours.get(i);
+        if (this.hours.isEmpty()) {
+            hoursWorked = 0;
+            return hoursWorked;
+        } else {
+            hoursWorked = 0;
+            for (int i = 0; i < hours.size(); i++) {
+                hoursWorked = hoursWorked + hours.get(i);
+            }
+            return hoursWorked;
         }
-        return hoursWorked;
     }
 }

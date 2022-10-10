@@ -23,9 +23,11 @@ public class EmployeeDatabase {
 
     //MODIFIES: this
     //EFFECTS: clears database when the pay period is over
-    //TODO change to resetting only the hours
     public void reset() {
-        database.clear();
+        for (Employee employee : database) {
+            employee.getHours().clear();
+            employee.getHoursWorked(employee.getHours());
+        }
     }
 
     //REQUIRES: name must be formatted as FirstName LastName
