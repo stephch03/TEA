@@ -28,7 +28,8 @@ public class EmployeeDatabase {
         database.clear();
     }
 
-    //REQUIRES: name provided is the name of an existing employee
+    //REQUIRES: name must be formatted as FirstName LastName
+    // //name provided is the name of an existing employee
     //MODIFIES: this
     //EFFECTS: removes an employee from the database
     public void removeEmployee(String name) {

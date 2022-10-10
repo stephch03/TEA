@@ -30,12 +30,16 @@ class EmployeeDatabaseTest {
     }
 
     @Test
-    public void removeEmployeeTest() {
+    public void removeExistingEmployeeTest() {
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
-        Employee e = new Employee("Emily Johnson");
-        databaseTest.addEmployee(e.getName());
-        assertEquals(databaseTest.getNumberOfEmployees(), 3);
-        databaseTest.removeEmployee(e.getName());
+        databaseTest.removeEmployee("Ada Lovelace");
+        assertEquals(databaseTest.getNumberOfEmployees(), 1);
+    }
+
+    @Test
+    public void removeNonExistentEmployeeTest() {
+        assertEquals(databaseTest.getNumberOfEmployees(), 2);
+        databaseTest.removeEmployee("Emily Johnson");
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
     }
 
