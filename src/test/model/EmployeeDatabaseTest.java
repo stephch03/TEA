@@ -21,7 +21,6 @@ class EmployeeDatabaseTest {
         adaHoursTest.add(5);
         databaseTest.addEmployee(a.getName(), a.getHoursWorked(adaHoursTest));
         Employee b = new Employee("Bob Builder", 0);
-        bobHoursTest.add(0);
         databaseTest.addEmployee(b.getName(), b.getHoursWorked(bobHoursTest));
     }
 
@@ -29,6 +28,7 @@ class EmployeeDatabaseTest {
     public void employeeDatabaseConstructorTest() {
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
         assertEquals(databaseTest.findEmployee("Ada Lovelace").getHoursWorked(adaHoursTest), 5);
+        assertEquals(databaseTest.findEmployee("Bob Builder").getHoursWorked(bobHoursTest), 0);
     }
 
     @Test
@@ -59,7 +59,7 @@ class EmployeeDatabaseTest {
     public void resetTest() {
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
         assertFalse(adaHoursTest.isEmpty());
-        assertFalse(bobHoursTest.isEmpty());
+        assertTrue(bobHoursTest.isEmpty());
         databaseTest.reset();
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
         adaHoursTest.clear();
