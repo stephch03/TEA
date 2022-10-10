@@ -3,7 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeTest {
@@ -32,28 +31,22 @@ class EmployeeTest {
     }
 
     @Test
-    public void updateHoursTest(){
+    public void updateHoursTest() {
         assertEquals(hoursTest.size(), 2);
-        employeeTest.getHours().set(0,2);
-        hoursTest.set(0,2);
-        employeeTest.updateHours(1,2);
+        employeeTest.getHours().set(0, 2);
+        hoursTest.set(0, 2);
+        employeeTest.updateHours(1, 2);
         assertEquals(hoursTest.get(0), 2);
         assertEquals(hoursTest.get(1), 0);
     }
 
     @Test
-    public void updateLastHoursTest(){
+    public void updateLastHoursTest() {
         assertEquals(hoursTest.size(), 2);
-        employeeTest.getHours().set(1,2);
-        hoursTest.set(1,2);
-        employeeTest.updateHours(2,2);
+        employeeTest.getHours().set(1, 2);
+        hoursTest.set(1, 2);
+        employeeTest.updateHours(2, 2);
         assertEquals(hoursTest.get(0), 5);
         assertEquals(hoursTest.get(1), 2);
     }
-
-//    @Test
-//    public void updateWageTest() {
-//        employeeTest.updateWage(18.00);
-//        assertEquals(employeeTest.getWage(), 18.00);
-//    }
 }
