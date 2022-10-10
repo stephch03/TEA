@@ -23,14 +23,22 @@ class EmployeeTest {
     }
 
     @Test
-    public void employeeConstructorTest(){
+    public void employeeConstructorTest() {
         assertEquals(employeeTest.getName(), "Ada Lovelace");
         assertEquals(hoursTest.size(), 3);
         assertEquals(employeeTest.getHoursWorked(hoursTest), 12);
     }
 
     @Test
+    public void changeNameTest() {
+        assertEquals(employeeTest.getName(), "Ada Lovelace");
+        employeeTest.changeName("Lily Perkins");
+        assertEquals(employeeTest.getName(), "Lily Perkins");
+    }
+
+    @Test
     public void inputHoursTest() {
+        assertEquals(hoursTest.size(), 3);
         hoursTest.add(3);
         employeeTest.inputHours(3);
         assertEquals(hoursTest.size(), 4);
