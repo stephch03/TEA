@@ -26,7 +26,7 @@ public class Employee {
     //EFFECTS: adds hours worked today to list of hours worked so far
     public void inputHours(int hoursWorkedToday) {
         hours.add(hoursWorkedToday);
-        hoursWorked = getHoursWorked(hours);
+        hoursWorked = getHoursWorked(getHours());
     }
 
     //REQUIRES: 1 <= dayNumber <= size of hours
@@ -34,7 +34,7 @@ public class Employee {
     //EFFECTS: changes the hours worked on the given day number of the work period
     public void updateHours(int dayNumber, int newHours) {
         hours.set((dayNumber - 1), newHours);
-        hoursWorked = getHoursWorked(hours);
+        hoursWorked = getHoursWorked(getHours());
     }
 
     //getters

@@ -17,6 +17,7 @@ class EmployeeDatabaseTest {
         databaseTest.addEmployee(b.getName(), b.getHoursWorked(b.getHours()));
     }
 
+
     @Test
     public void employeeDatabaseConstructorTest() {
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
@@ -55,7 +56,9 @@ class EmployeeDatabaseTest {
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
         Employee a = databaseTest.findEmployee("Ada Lovelace");
         Employee b = databaseTest.findEmployee("Bob Builder");
-        assertTrue(a.getHours().isEmpty());
+        a.inputHours(5);
+        assertEquals(a.getHoursWorked(a.getHours()), 5);
+        assertFalse(a.getHours().isEmpty());
         assertTrue(b.getHours().isEmpty());
         databaseTest.reset();
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
