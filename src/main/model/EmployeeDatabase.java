@@ -9,15 +9,14 @@ public class EmployeeDatabase {
 
     //EFFECTS: creates a database to hold all the employee information
     public EmployeeDatabase() {
-        ArrayList<Employee> database = new ArrayList<>();
-        this.database = database;
+        database = new ArrayList<Employee>();
     }
 
     //REQUIRES: name must be formatted as FirstName LastName
     //MODIFIES: this
     //EFFECTS: adds a new employee to the database
-    public void addEmployee(String name, int initialHours) {
-        Employee e = new Employee(name, initialHours);
+    public void addEmployee(String name) {
+        Employee e = new Employee(name);
         database.add(e);
     }
 
@@ -25,8 +24,7 @@ public class EmployeeDatabase {
     //EFFECTS: clears database when the pay period is over
     public void reset() {
         for (Employee employee : database) {
-            employee.getHours().clear();
-            employee.getHoursWorked(employee.getHours());
+            employee.clearHours();
         }
     }
 

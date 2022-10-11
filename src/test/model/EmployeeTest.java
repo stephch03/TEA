@@ -11,71 +11,75 @@ class EmployeeTest {
 
     @BeforeEach
     public void setup() {
-        employeeTest = new Employee("Ada Lovelace",0);
-        employeeTest.getHours().add(5);
-        employeeTest.getHours().add(0);
-        employeeTest.getHours().add(7);
+        employeeTest = new Employee("Ada Lovelace");
+        employeeTest.inputHours(5);
+        employeeTest.inputHours(0);
+        employeeTest.inputHours(7);
     }
+
 
     @Test
     public void employeeConstructorTest() {
-        assertEquals(employeeTest.getName(), "Ada Lovelace");
-        assertEquals(employeeTest.getHours().size(), 3);
-        assertEquals(employeeTest.getHoursWorked(employeeTest.getHours()), 12);
+        assertEquals("Ada Lovelace", employeeTest.getName());
+        assertEquals(3, employeeTest.getHours().size());
+        assertEquals(12, employeeTest.getHoursWorked());
     }
 
     @Test
     public void setNameTest() {
-        assertEquals(employeeTest.getName(), "Ada Lovelace");
+        assertEquals("Ada Lovelace", employeeTest.getName());
         employeeTest.setName("Lily Perkins");
-        assertEquals(employeeTest.getName(), "Lily Perkins");
+        assertEquals("Lily Perkins", employeeTest.getName());
     }
 
     @Test
     public void inputHoursTest() {
-        assertEquals(employeeTest.getHours().size(), 3);
+        assertEquals(3, employeeTest.getHours().size());
         employeeTest.inputHours(3);
-        assertEquals(employeeTest.getHours().size(), 4);
-        assertEquals(employeeTest.getHours().get(0), 5);
-        assertEquals(employeeTest.getHours().get(1), 0);
-        assertEquals(employeeTest.getHours().get(2), 7);
-        assertEquals(employeeTest.getHours().get(3), 3);
-        assertEquals(employeeTest.getHoursWorked(employeeTest.getHours()), 15);
+        assertEquals(4, employeeTest.getHours().size());
+        assertEquals(5, employeeTest.getHours().get(0));
+        assertEquals(0, employeeTest.getHours().get(1));
+        assertEquals(7, employeeTest.getHours().get(2));
+        assertEquals(3, employeeTest.getHours().get(3));
+        assertEquals(15, employeeTest.getHoursWorked());
     }
 
     @Test
     public void inputZeroHoursTest() {
-        assertEquals(employeeTest.getHours().size(), 3);
+        assertEquals(3, employeeTest.getHours().size());
         employeeTest.inputHours(0);
-        assertEquals(employeeTest.getHours().size(), 4);
-        assertEquals(employeeTest.getHours().get(0), 5);
-        assertEquals(employeeTest.getHours().get(1), 0);
-        assertEquals(employeeTest.getHours().get(2), 7);
-        assertEquals(employeeTest.getHours().get(3), 0);
-        assertEquals(employeeTest.getHoursWorked(employeeTest.getHours()), 12);
+        assertEquals(4, employeeTest.getHours().size());
+        assertEquals(5, employeeTest.getHours().get(0));
+        assertEquals(0, employeeTest.getHours().get(1));
+        assertEquals(7, employeeTest.getHours().get(2));
+        assertEquals(0, employeeTest.getHours().get(3));
+        assertEquals(12, employeeTest.getHoursWorked());
     }
 
     @Test
     public void updateFirstDayHoursTest() {
-        assertEquals(employeeTest.getHours().size(), 3);
+        assertEquals(3, employeeTest.getHours().size());
         employeeTest.updateHours(1, 2);
-        assertEquals(employeeTest.getHours().get(0), 2);
-        assertEquals(employeeTest.getHoursWorked(employeeTest.getHours()), 9);
+        assertEquals(3, employeeTest.getHours().size());
+        assertEquals(2, employeeTest.getHours().get(0));
+        assertEquals(9, employeeTest.getHoursWorked());
     }
 
     @Test
     public void updateMidDayHoursTest() {
-        assertEquals(employeeTest.getHours().size(), 3);
+        assertEquals(3, employeeTest.getHours().size());
         employeeTest.updateHours(2, 6);
-        assertEquals(employeeTest.getHours().get(1), 6);
-        assertEquals(employeeTest.getHoursWorked(employeeTest.getHours()), 18);
+        assertEquals(3, employeeTest.getHours().size());
+        assertEquals(6, employeeTest.getHours().get(1));
+        assertEquals(18, employeeTest.getHoursWorked());
     }
 
     @Test
     public void updateLastDayHoursTest() {
-        assertEquals(employeeTest.getHours().size(), 3);
+        assertEquals(3, employeeTest.getHours().size());
         employeeTest.updateHours(3, 5);
-        assertEquals(employeeTest.getHours().get(2), 5);
-        assertEquals(employeeTest.getHoursWorked(employeeTest.getHours()), 10);
+        assertEquals(3, employeeTest.getHours().size());
+        assertEquals(5, employeeTest.getHours().get(2));
+        assertEquals(10, employeeTest.getHoursWorked());
     }
 }

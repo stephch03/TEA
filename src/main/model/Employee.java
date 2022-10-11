@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 public class Employee {
     private String name;
-    private ArrayList<Integer> hours = new ArrayList<>();
-    private int hoursWorked;
+    private ArrayList<Integer> hours;
 
     //REQUIRES: name must be formatted as FirstName LastName, hoursWorked = 0
     //EFFECTS: creates a new employee
-    public Employee(String name, int hoursWorked) {
+    public Employee(String name) {
+        hours = new ArrayList<>();
         this.name = name;
-        this.hoursWorked = hoursWorked;
     }
 
     //REQUIRES: name must be formatted as FirstName LastName
@@ -26,7 +25,6 @@ public class Employee {
     //EFFECTS: adds hours worked today to list of hours worked so far
     public void inputHours(int hoursWorkedToday) {
         hours.add(hoursWorkedToday);
-        hoursWorked = getHoursWorked(getHours());
     }
 
     //REQUIRES: 1 <= dayNumber <= size of hours
@@ -34,7 +32,20 @@ public class Employee {
     //EFFECTS: changes the hours worked on the given day number of the work period
     public void updateHours(int dayNumber, int newHours) {
         hours.set((dayNumber - 1), newHours);
-        hoursWorked = getHoursWorked(getHours());
+    }
+
+    //MODIFIES: this
+    //EFFECTS: empties the list of hours
+    public void clearHours() {
+        hours.clear();
+    }
+
+    public int getHoursWorked() {
+        int hoursWorked = 0;
+        for (int i = 0; i < hours.size(); i++) {
+            hoursWorked = hoursWorked + hours.get(i);
+        }
+        return hoursWorked;
     }
 
     //getters
@@ -47,17 +58,6 @@ public class Employee {
         return hours;
     }
 
-    public int getHoursWorked(ArrayList<Integer> hours) {
-        this.hours = hours;
-        if (this.hours.isEmpty()) {
-            hoursWorked = 0;
-            return hoursWorked;
-        } else {
-            hoursWorked = 0;
-            for (int i = 0; i < hours.size(); i++) {
-                hoursWorked = hoursWorked + hours.get(i);
-            }
-            return hoursWorked;
-        }
-    }
+
 }
+
