@@ -2,42 +2,37 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeDatabaseTest {
 
     EmployeeDatabase databaseTest;
-    ArrayList<Integer> adaHoursTest = new ArrayList<>();
-    ArrayList<Integer> bobHoursTest = new ArrayList<>();
-    ArrayList<Integer> emilyHoursTest = new ArrayList<>();
 
     @BeforeEach
     public void setup() {
         databaseTest = new EmployeeDatabase();
         Employee a = new Employee("Ada Lovelace", 0);
-        adaHoursTest.add(5);
-        databaseTest.addEmployee(a.getName(), a.getHoursWorked(adaHoursTest));
+        databaseTest.addEmployee(a.getName(), a.getHoursWorked(a.getHours()));
         Employee b = new Employee("Bob Builder", 0);
-        databaseTest.addEmployee(b.getName(), b.getHoursWorked(bobHoursTest));
+        databaseTest.addEmployee(b.getName(), b.getHoursWorked(b.getHours()));
     }
 
     @Test
     public void employeeDatabaseConstructorTest() {
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
-        assertEquals(databaseTest.findEmployee("Ada Lovelace").getHoursWorked(adaHoursTest), 5);
-        assertEquals(databaseTest.findEmployee("Bob Builder").getHoursWorked(bobHoursTest), 0);
+        Employee a = databaseTest.findEmployee("Ada Lovelace");
+        assertEquals(a.getHoursWorked(a.getHours()), 0);
+        Employee b = databaseTest.findEmployee("Bob Builder");
+        assertEquals(b.getHoursWorked(b.getHours()), 0);
     }
 
     @Test
     public void addEmployeeTest() {
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
         Employee e = new Employee("Emily Johnson",0);
-        assertEquals(e.getHoursWorked(emilyHoursTest), 0);
-        emilyHoursTest.add(5);
-        databaseTest.addEmployee(e.getName(), e.getHoursWorked(emilyHoursTest));
+        assertEquals(e.getHoursWorked(e.getHours()), 0);
+        e.getHours().add(5);
+        databaseTest.addEmployee(e.getName(), e.getHoursWorked(e.getHours()));
         assertEquals(databaseTest.getNumberOfEmployees(), 3);
     }
 
@@ -58,15 +53,15 @@ class EmployeeDatabaseTest {
     @Test
     public void resetTest() {
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
-        assertFalse(adaHoursTest.isEmpty());
-        assertTrue(bobHoursTest.isEmpty());
+        Employee a = databaseTest.findEmployee("Ada Lovelace");
+        Employee b = databaseTest.findEmployee("Bob Builder");
+        assertTrue(a.getHours().isEmpty());
+        assertTrue(b.getHours().isEmpty());
         databaseTest.reset();
         assertEquals(databaseTest.getNumberOfEmployees(), 2);
-        adaHoursTest.clear();
-        bobHoursTest.clear();
-        assertEquals(databaseTest.findEmployee("Ada Lovelace").getHoursWorked(adaHoursTest),0);
-        assertEquals(databaseTest.findEmployee("Bob Builder").getHoursWorked(bobHoursTest),0);
-        assertTrue(adaHoursTest.isEmpty());
-        assertTrue(bobHoursTest.isEmpty());
+        assertEquals(a.getHoursWorked(a.getHours()),0);
+        assertEquals(a.getHoursWorked(a.getHours()),0);
+        assertTrue(a.getHours().isEmpty());
+        assertTrue(b.getHours().isEmpty());
     }
 }
