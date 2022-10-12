@@ -6,8 +6,8 @@ public class Employee {
     private String name;
     private ArrayList<Integer> hours;
 
-    //REQUIRES: name must be formatted as FirstName LastName, hoursWorked = 0
-    //EFFECTS: creates a new employee
+    //REQUIRES: name must be formatted as FirstName LastName
+    //EFFECTS: creates a new employee with their name and an empty list of their hours
     public Employee(String name) {
         hours = new ArrayList<>();
         this.name = name;
@@ -15,20 +15,20 @@ public class Employee {
 
     //REQUIRES: name must be formatted as FirstName LastName
     //MODIFIES: this
-    //EFFECTS: changes the name of an employee
-    public void setName(String newName) {
+    //EFFECTS: sets the name of an employee
+    public void changeName(String newName) {
         name = newName;
     }
 
     //REQUIRES: 0 <= hoursWorkedToday
-    //MODIFIES: hours, this
+    //MODIFIES: this
     //EFFECTS: adds hours worked today to list of hours worked so far
     public void inputHours(int hoursWorkedToday) {
         hours.add(hoursWorkedToday);
     }
 
     //REQUIRES: 1 <= dayNumber <= size of hours
-    //MODIFIES: hours, this
+    //MODIFIES: this
     //EFFECTS: changes the hours worked on the given day number of the work period
     public void updateHours(int dayNumber, int newHours) {
         hours.set((dayNumber - 1), newHours);
@@ -40,6 +40,7 @@ public class Employee {
         hours.clear();
     }
 
+    //EFFECTS: returns a sum of the total hours worked so far
     public int getHoursWorked() {
         int hoursWorked = 0;
         for (int i = 0; i < hours.size(); i++) {
@@ -57,7 +58,4 @@ public class Employee {
     public ArrayList<Integer> getHours() {
         return hours;
     }
-
-
 }
-

@@ -21,27 +21,23 @@ public class EmployeeDatabase {
     }
 
     //MODIFIES: this
-    //EFFECTS: clears database when the pay period is over
+    //EFFECTS: clears database
     public void reset() {
         for (Employee employee : database) {
             employee.clearHours();
         }
     }
+    //TODO completely reset database or just hours??? check modifies clause
 
     //REQUIRES: name must be formatted as FirstName LastName
-    // //name provided is the name of an existing employee
     //MODIFIES: this
     //EFFECTS: removes an employee from the database
     public void removeEmployee(String name) {
         database.remove(findEmployee(name));
     }
 
-    //getters
-
-    public int getNumberOfEmployees() {
-        return database.size();
-    }
-
+    //REQUIRES: name must be formatted as FirstName LastName
+    //EFFECTS: returns employee with given name, return null if employee does not exist
     public Employee findEmployee(String name) {
         for (Employee employee : database) {
             if (employee.getName().equals(name)) {
@@ -49,5 +45,11 @@ public class EmployeeDatabase {
             }
         }
         return null;
+    }
+
+    //getters
+
+    public int getNumberOfEmployees() {
+        return database.size();
     }
 }

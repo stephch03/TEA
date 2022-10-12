@@ -61,7 +61,8 @@ class EmployeeDatabaseTest {
         Employee a = databaseTest.findEmployee("Ada Lovelace");
         Employee b = databaseTest.findEmployee("Bob Builder");
         a.inputHours(5);
-        assertEquals(5, a.getHoursWorked());
+        a.inputHours(7);
+        assertEquals(12, a.getHoursWorked());
         assertFalse(a.getHours().isEmpty());
         assertTrue(b.getHours().isEmpty());
         databaseTest.reset();
