@@ -34,10 +34,11 @@ public class Employee {
         hours.set((dayNumber - 1), newHours);
     }
 
+    //REQUIRES: hours is not empty
     //MODIFIES: this
     //EFFECTS: empties the list of hours
     public void clearHours() {
-        hours.clear();
+        hours = new ArrayList<Integer>();
     }
 
     //EFFECTS: returns a sum of the total hours worked so far

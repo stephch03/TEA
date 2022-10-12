@@ -17,7 +17,6 @@ class EmployeeTest {
         employeeTest.inputHours(7);
     }
 
-
     @Test
     public void employeeConstructorTest() {
         assertEquals("Ada Lovelace", employeeTest.getName());
@@ -81,5 +80,13 @@ class EmployeeTest {
         assertEquals(3, employeeTest.getHours().size());
         assertEquals(5, employeeTest.getHours().get(2));
         assertEquals(10, employeeTest.getHoursWorked());
+    }
+
+    @Test
+    public void clearHoursTest() {
+        assertEquals(3, employeeTest.getHours().size());
+        employeeTest.clearHours();
+        assertTrue(employeeTest.getHours().isEmpty());
+        assertEquals(0, employeeTest.getHoursWorked());
     }
 }
