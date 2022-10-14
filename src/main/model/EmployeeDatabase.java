@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Represents all the employees in a company
 public class EmployeeDatabase {
@@ -47,9 +48,26 @@ public class EmployeeDatabase {
         return null;
     }
 
+    public List<String> printTimesheet() {
+        List<String> timesheet = new ArrayList<>();
+        for (Employee e : database) {
+            timesheet.add(e.getName() + " : " + e.getHoursWorked() + " hours");
+        }
+        return timesheet;
+    }
+
     //getters
 
     public int getNumberOfEmployees() {
         return database.size();
+    }
+
+    public List<String> employeeNames() {
+        List<String> employeeNames = new ArrayList<>();
+
+        for (Employee employee : database) {
+            employeeNames.add(employee.getName());
+        }
+        return employeeNames;
     }
 }
