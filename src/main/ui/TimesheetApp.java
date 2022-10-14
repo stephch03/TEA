@@ -9,23 +9,10 @@ import java.util.Scanner;
 // Timesheet entry application
 // Structure from CPSC 210 TellerApp
 public class TimesheetApp {
-// start menu: add employee, edit employee, quit
-//    - add next employee
-//    - edit employee: given name -> find employee
-//       - if employee not found, return "Employee not found" select option again
-//       - input hours worked
-//       - change name
-//       - update hours worked
-//       - get hours
-//    - reset all employees
-//    - remove employee
-//    quit: print here is your timesheet, should be option for every input
-//            - timesheet include each employee formatted as name: total hours
-
     private EmployeeDatabase database;
     private Scanner input;
 
-    // EFFECTS: runs the teller application
+    // EFFECTS: runs the timesheet application
     public TimesheetApp() {
         runTimesheet();
     }
@@ -35,14 +22,11 @@ public class TimesheetApp {
     private void runTimesheet() {
         boolean keepGoing = true;
         String command = null;
-
         init();
-
         while (keepGoing) {
             displayMenu();
             command = input.next();
             command = command.toLowerCase();
-
             if (command.equals("q")) {
                 keepGoing = false;
             } else {
@@ -60,8 +44,6 @@ public class TimesheetApp {
             createEmployee();
         } else if (command.equals("d")) {
             removeEmployee();
-//        } else if (command.equals("m")) {
-//            modifyEmployee();
         } else if (command.equals("n")) {
             changeName();
         } else if (command.equals("ah")) {
@@ -81,19 +63,16 @@ public class TimesheetApp {
         database = new EmployeeDatabase();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        System.out.println("Hello, please start by adding an employee to your database");
     }
 
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nSelect from Main Menu:");
-
         System.out.println("\tae -> add Employee");
         System.out.println("\td -> delete Employee");
         System.out.println("\tq -> quit and print Timesheet");
-//        System.out.println("\te -> Employee information");
-
         System.out.println("\nOr, select from Employee Menu:");
-
         System.out.println("\tn -> change Employee's name");
         System.out.println("\tah -> add Employee's new hours");
         System.out.println("\tu -> update Employee's existing hours");
@@ -103,14 +82,13 @@ public class TimesheetApp {
     // MODIFIES: this
     // EFFECTS: add a new employee to the database
     private void createEmployee() {
-        printEmployees();
+        System.out.println("Please enter the name of an employee you'd like to add: FirstName LastName");
         String name = input.next();
-
         if (database.findEmployee(name) == null) {
             database.addEmployee(name);
-            System.out.println(name + " has been added to the database\n");
+            System.out.println("\n" + name + " has been added to the database");
         } else {
-            System.out.println("Employee already exists...\n");
+            System.out.println("\nEmployee already exists...");
         }
     }
 
@@ -119,12 +97,11 @@ public class TimesheetApp {
     private void removeEmployee() {
         printEmployees();
         String name = input.next();
-
         if (database.findEmployee(name) == null) {
-            System.out.println("Employee does not exist...\n");
+            System.out.println("\nEmployee does not exist...");
         } else {
             database.removeEmployee(name);
-            System.out.println(name + " has been removed from the database\n");
+            System.out.println("\n" + name + " has been removed from the database");
         }
     }
 
@@ -139,7 +116,6 @@ public class TimesheetApp {
     private void changeName() {
         printEmployees();
         String name = input.next();
-
         if (database.findEmployee(name) == null) {
             System.out.println("Employee does not exist...\n");
         } else {
@@ -156,7 +132,6 @@ public class TimesheetApp {
     private void addHours() {
         printEmployees();
         String name = input.next();
-
         if (database.findEmployee(name) == null) {
             System.out.println("Employee does not exist...\n");
         } else {
@@ -177,7 +152,6 @@ public class TimesheetApp {
     private void updateHours() {
         printEmployees();
         String name = input.next();
-
         if (database.findEmployee(name) == null) {
             System.out.println("Employee does not exist...\n");
         } else {
@@ -195,6 +169,7 @@ public class TimesheetApp {
         }
     }
 
+    // EFFECTS: prints out how many hours an employee has worked so far
     private void hoursWorked() {
         printEmployees();
         String name = input.next();
@@ -202,69 +177,22 @@ public class TimesheetApp {
             System.out.println("Employee does not exist...\n");
         } else {
             Employee e = database.findEmployee(name);
-            System.out.println(name + " has worked " + e.getHoursWorked() + " hours so far\n");
+            System.out.println(name + " has worked " + e.getHoursWorked() + " hours so far");
         }
     }
 
     // EFFECTS: prints list of employee names
     private void printEmployees() {
-        System.out.println("Please select from the following employees:\n");
+        System.out.println("Please select from the following employees:");
         System.out.println(database.employeeNames());
     }
-//TODO loop through a list of existing employees to return name - if contains, return employee, otherwise
 
-
-    private void nonExistentEmployee(String name) {
+    private boolean nonExistentEmployee(String name) {
         if (database.findEmployee(name) == null) {
-            System.out.println("Employee does not exist...\n");
+            System.out.println("Employee does not exist...");
+            return true;
         }
+        return false;
     }
-
-    //    // MODIFIES: this
-//    // EFFECTS: conducts a transfer transaction
-//    private void modifyEmployee() {
-//        boolean keepGoing = true;
-//        String command = null;
-//
-//        while (keepGoing) {
-//            displayEmployeeMenu();
-//            command = input.next();
-//            command = command.toLowerCase();
-//
-//            if (command.equals("exit")) {
-//                keepGoing = false;
-//            } else {
-//                processEmployeeCommand(command);
-//            }
-//        }
-//        String command;
-//        processCommand(command);
-//    }
-//
-//    // EFFECTS: displays Employee menu of options to user
-//    //TODO how to return to display menu
-//    private void displayEmployeeMenu() {
-//        System.out.println("\nSelect from:");
-//        System.out.println("\tn -> change Employee's name");
-//        System.out.println("\ta -> add Employee's new hours");
-//        System.out.println("\tu -> update Employee's existing hours");
-//        System.out.println("\tg -> get Employee's hours worked so far");
-//        System.out.println("\te -> exit Employee menu");
-//    }
-//    // MODIFIES: this
-//    // EFFECTS: processes user command from the employee menu
-//    private void processEmployeeCommand(String command) {
-//        if (command.equals("a")) {
-//            changeName();
-//        } else if (command.equals("g")) {
-//            hoursWorked();
-//        } else if (command.equals("n")) {
-//            addHours();
-//        } else if (command.equals("u")) {
-//            updateHours();
-//        } else {
-//            System.out.println("Selection not valid...");
-//        }
-//    }
 
 }

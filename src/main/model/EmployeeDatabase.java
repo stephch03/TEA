@@ -21,15 +21,6 @@ public class EmployeeDatabase {
         database.add(e);
     }
 
-    //MODIFIES: this
-    //EFFECTS: clears database
-    public void reset() {
-        for (Employee employee : database) {
-            employee.clearHours();
-        }
-    }
-    //TODO completely reset database or just hours??? check modifies clause
-
     //REQUIRES: name must be formatted as FirstName LastName
     //MODIFIES: this
     //EFFECTS: removes an employee from the database

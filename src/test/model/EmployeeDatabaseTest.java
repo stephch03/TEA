@@ -56,17 +56,4 @@ class EmployeeDatabaseTest {
         assertNull(databaseTest.findEmployee("Emily Johnson"));
     }
 
-    @Test
-    public void resetTest() {
-        assertEquals(2, databaseTest.getNumberOfEmployees());
-        assertFalse(a.getHours().isEmpty());
-        assertTrue(b.getHours().isEmpty());
-        databaseTest.reset();
-        assertEquals(2, databaseTest.getNumberOfEmployees());
-        //TODO need to fix bug in reset
-//        assertEquals(0, a.getHoursWorked());
-        assertEquals(0, b.getHoursWorked());
-//        assertTrue(a.getHours().isEmpty());
-        assertTrue(b.getHours().isEmpty());
-    }
 }

@@ -82,11 +82,4 @@ class EmployeeTest {
         assertEquals(10, employeeTest.getHoursWorked());
     }
 
-    @Test
-    public void clearHoursTest() {
-        assertEquals(3, employeeTest.getHours().size());
-        employeeTest.clearHours();
-        assertTrue(employeeTest.getHours().isEmpty());
-        assertEquals(0, employeeTest.getHoursWorked());
-    }
 }
