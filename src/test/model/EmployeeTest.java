@@ -25,7 +25,7 @@ class EmployeeTest {
     }
 
     @Test
-    public void setNameTest() {
+    public void changeNameTest() {
         assertEquals("Ada Lovelace", employeeTest.getName());
         employeeTest.changeName("Lily Perkins");
         assertEquals("Lily Perkins", employeeTest.getName());

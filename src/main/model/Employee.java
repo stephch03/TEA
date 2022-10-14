@@ -13,7 +13,7 @@ public class Employee {
         this.name = name;
     }
 
-    //REQUIRES: name must be formatted as FirstName LastName
+    //REQUIRES: name must be formatted as FirstName LastName, and be different from the original name
     //MODIFIES: this
     //EFFECTS: sets the name of an employee
     public void changeName(String newName) {
