@@ -6,11 +6,11 @@ import java.util.List;
 // Represents all the employees in a company
 public class EmployeeDatabase {
 
-    private ArrayList<Employee> database;
+    private List<Employee> database;
 
     //EFFECTS: creates a database to hold all the employee information
     public EmployeeDatabase() {
-        database = new ArrayList<Employee>();
+        database = new ArrayList<>();
     }
 
     //REQUIRES: name must be formatted as FirstName LastName

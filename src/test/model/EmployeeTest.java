@@ -41,6 +41,7 @@ class EmployeeTest {
         assertEquals(7, employeeTest.getHours().get(2));
         assertEquals(3, employeeTest.getHours().get(3));
         assertEquals(15, employeeTest.getHoursWorked());
+        assertEquals(4, employeeTest.getHours().size());
     }
 
     @Test

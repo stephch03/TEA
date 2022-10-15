@@ -15,7 +15,6 @@ class EmployeeDatabaseTest {
         databaseTest = new EmployeeDatabase();
         a = new Employee("Ada Lovelace");
         databaseTest.addEmployee(a.getName());
-        a.inputHours(5);
         b = new Employee("Bob Builder");
         databaseTest.addEmployee(b.getName());
     }
@@ -24,7 +23,7 @@ class EmployeeDatabaseTest {
     @Test
     public void employeeDatabaseConstructorTest() {
         assertEquals(2, databaseTest.getNumberOfEmployees());
-        assertEquals(5, a.getHoursWorked());
+        assertEquals(0, a.getHoursWorked());
         assertEquals(0, b.getHoursWorked());
         assertEquals("Ada Lovelace", a.getName());
         assertEquals("Bob Builder", b.getName());
@@ -54,6 +53,28 @@ class EmployeeDatabaseTest {
         databaseTest.removeEmployee("Emily Johnson");
         assertEquals(2, databaseTest.getNumberOfEmployees());
         assertNull(databaseTest.findEmployee("Emily Johnson"));
+    }
+
+    @Test
+    public void printEmptyTimesheetTest() {
+        assertEquals(2, databaseTest.getNumberOfEmployees());
+        databaseTest.removeEmployee(a.getName());
+        assertEquals(1, databaseTest.getNumberOfEmployees());
+        databaseTest.removeEmployee(b.getName());
+        assertEquals(0, databaseTest.getNumberOfEmployees());
+        databaseTest.printTimesheet();
+        assertTrue(databaseTest.printTimesheet().isEmpty());
+    }
+
+    //TODO fix bug
+    @Test
+    public void printTimesheetTest() {
+        assertEquals(2, databaseTest.getNumberOfEmployees());
+        a.inputHours(5);
+        databaseTest.printTimesheet();
+        assertEquals(2, databaseTest.printTimesheet().size());
+        assertEquals("Ada Lovelace : 5 hours", databaseTest.printTimesheet().get(0));
+        assertEquals("Bob Builder : 0 hours", databaseTest.printTimesheet().get(1));
     }
 
 }

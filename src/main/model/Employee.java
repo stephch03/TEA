@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Employee {
     private String name;
     private ArrayList<Integer> hours;
-    private static final int MAX_HOURS_WORKED_PER_SHIFT = 8;
 
     //REQUIRES: name must be formatted as FirstName LastName
     //EFFECTS: creates a new employee with their name and an empty list of their hours
@@ -39,7 +38,7 @@ public class Employee {
     public int getHoursWorked() {
         int hoursWorked = 0;
         for (int i = 0; i < hours.size(); i++) {
-            hoursWorked = hoursWorked + hours.get(i);
+            hoursWorked += hours.get(i);
         }
         return hoursWorked;
     }
