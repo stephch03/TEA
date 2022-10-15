@@ -122,9 +122,8 @@ public class TimesheetApp {
             String name = input.next();
             if (employeeExists(name)) {
                 System.out.print("Enter new name: FirstName LastName\n");
-                Employee e = database.findEmployee(name);
                 String newName = input.next();
-                e.changeName(newName);
+                database.findEmployee(name).changeName(newName);
                 System.out.println(name + " has been changed to " + newName + "\n");
             }
         }
@@ -137,14 +136,13 @@ public class TimesheetApp {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
-                Employee e = database.findEmployee(name);
                 System.out.print("Enter new hour: Integer\n");
                 int hour = input.nextInt();
                 if (hour >= 0 && hour <= 8) {
-                    e.inputHours(hour);
-                    System.out.println(name + " worked " + hour + " hours today \n");
+                    database.findEmployee(name).inputHours(hour);
+                    System.out.println(name + " worked " + hour + " hours today\n");
                 } else {
-                    System.out.println(name + "cannot work " + hour + "hours \n");
+                    System.out.println(name + " cannot work " + hour + " hours\n");
                 }
             }
         }
@@ -164,9 +162,9 @@ public class TimesheetApp {
                 int hour = input.nextInt();
                 if (hour >= 0 && hour <= 8 && number >= 1 && number <= e.getHours().size()) {
                     e.updateHours(number, hour);
-                    System.out.println(name + " worked " + hour + " hours today\n");
+                    System.out.println(name + " worked " + hour + " hours on Day " + number + "\n");
                 } else {
-                    System.out.println(name + " cannot work " + hour + "hours\n");
+                    System.out.println("Please try again\n");
                 }
             }
         }
@@ -174,15 +172,12 @@ public class TimesheetApp {
 
     // EFFECTS: prints out how many hours an employee has worked so far
     private void hoursWorked() {
-        if (database.getNumberOfEmployees() > 0) {
+        if (emptyDatabase()) {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
-                Employee e = database.findEmployee(name);
-                System.out.println(name + " has worked " + e.getHoursWorked() + " hours so far");
+                System.out.println(name + " has worked " + database.findEmployee(name).getHoursWorked() + " hours \n");
             }
-        } else {
-            emptyDatabase();
         }
     }
 
@@ -211,4 +206,3 @@ public class TimesheetApp {
     }
 
 }
-//TODO check no employee case, add space in add hours, change update hours to on day x
