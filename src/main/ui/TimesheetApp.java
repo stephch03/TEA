@@ -64,7 +64,6 @@ public class TimesheetApp {
         input.useDelimiter("\n");
     }
 
-
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nSelect from Main Menu:");
@@ -94,15 +93,13 @@ public class TimesheetApp {
     // MODIFIES: this
     // EFFECTS: removes an employee from the database
     private void removeEmployee() {
-        if (database.getNumberOfEmployees() > 0) {
+        if (emptyDatabase()) {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
                 database.removeEmployee(name);
                 System.out.println("\n" + name + " has been removed from the database");
             }
-        } else {
-            emptyDatabase();
         }
     }
 
@@ -120,7 +117,7 @@ public class TimesheetApp {
     // MODIFIES: this
     // EFFECTS: changes the name of an employee
     private void changeName() {
-        if (database.getNumberOfEmployees() > 0) {
+        if (emptyDatabase()) {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
@@ -130,15 +127,13 @@ public class TimesheetApp {
                 e.changeName(newName);
                 System.out.println(name + " has been changed to " + newName + "\n");
             }
-        } else {
-            emptyDatabase();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: adds hours worked today to an employee
     private void addHours() {
-        if (database.getNumberOfEmployees() > 0) {
+        if (emptyDatabase()) {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
@@ -152,15 +147,13 @@ public class TimesheetApp {
                     System.out.println(name + "cannot work " + hour + "hours \n");
                 }
             }
-        } else {
-            emptyDatabase();
         }
     }
 
     //MODIFIES: this
     //EFFECTS: edits employee's hours
     private void updateHours() {
-        if (database.getNumberOfEmployees() > 0) {
+        if (emptyDatabase()) {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
@@ -176,8 +169,6 @@ public class TimesheetApp {
                     System.out.println(name + " cannot work " + hour + "hours\n");
                 }
             }
-        } else {
-            emptyDatabase();
         }
     }
 
@@ -211,8 +202,13 @@ public class TimesheetApp {
     }
 
     // EFFECTS: tells user to add an employee before doing anything else
-    private void emptyDatabase() {
-        System.out.println("Please add an employee to your database");
+    private boolean emptyDatabase() {
+        if (database.getNumberOfEmployees() == 0) {
+            System.out.println("Please add an employee to your database");
+            return false;
+        }
+        return true;
     }
 
 }
+//TODO check no employee case, add space in add hours, change update hours to on day x
