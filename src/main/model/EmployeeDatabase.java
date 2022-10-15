@@ -16,8 +16,7 @@ public class EmployeeDatabase {
     //REQUIRES: name must be formatted as FirstName LastName
     //MODIFIES: this
     //EFFECTS: adds a new employee to the database
-    public void addEmployee(String name) {
-        Employee e = new Employee(name);
+    public void addEmployee(Employee e) {
         database.add(e);
     }
 
@@ -39,6 +38,7 @@ public class EmployeeDatabase {
         return null;
     }
 
+    //EFFECTS: returns EmployeeName : # hours worked for each employee in database
     public List<String> printTimesheet() {
         List<String> timesheet = new ArrayList<>();
         for (Employee e : database) {
@@ -47,18 +47,18 @@ public class EmployeeDatabase {
         return timesheet;
     }
 
-    //getters
-
-    public int getNumberOfEmployees() {
-        return database.size();
-    }
-
+    //EFFECTS: returns a list of all the names of employees in the database
     public List<String> employeeNames() {
         List<String> employeeNames = new ArrayList<>();
-
         for (Employee employee : database) {
             employeeNames.add(employee.getName());
         }
         return employeeNames;
+    }
+
+    //getters
+
+    public int getNumberOfEmployees() {
+        return database.size();
     }
 }

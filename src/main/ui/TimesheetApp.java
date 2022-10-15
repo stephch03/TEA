@@ -84,7 +84,7 @@ public class TimesheetApp {
         System.out.println("Please enter the name of an employee you'd like to add: FirstName LastName");
         String name = input.next();
         if (database.findEmployee(name) == null) {
-            database.addEmployee(name);
+            database.addEmployee(new Employee(name));
             System.out.println(name + " has been added to the database");
         } else {
             System.out.println("Employee already exists...");
@@ -97,14 +97,12 @@ public class TimesheetApp {
         if (database.getNumberOfEmployees() > 0) {
             printEmployees();
             String name = input.next();
-            if (database.findEmployee(name) == null) {
-                System.out.println("\nEmployee does not exist...");
-            } else {
+            if (employeeExists(name)) {
                 database.removeEmployee(name);
                 System.out.println("\n" + name + " has been removed from the database");
             }
         } else {
-            System.out.println("Please add an employee to your database");
+            emptyDatabase();
         }
     }
 
@@ -125,9 +123,7 @@ public class TimesheetApp {
         if (database.getNumberOfEmployees() > 0) {
             printEmployees();
             String name = input.next();
-            if (database.findEmployee(name) == null) {
-                System.out.println("Employee does not exist...\n");
-            } else {
+            if (employeeExists(name)) {
                 System.out.print("Enter new name: FirstName LastName\n");
                 Employee e = database.findEmployee(name);
                 String newName = input.next();
@@ -135,7 +131,7 @@ public class TimesheetApp {
                 System.out.println(name + " has been changed to " + newName + "\n");
             }
         } else {
-            System.out.println("Please add an employee to your database");
+            emptyDatabase();
         }
     }
 
@@ -145,9 +141,7 @@ public class TimesheetApp {
         if (database.getNumberOfEmployees() > 0) {
             printEmployees();
             String name = input.next();
-            if (database.findEmployee(name) == null) {
-                System.out.println("Employee does not exist...\n");
-            } else {
+            if (employeeExists(name)) {
                 Employee e = database.findEmployee(name);
                 System.out.print("Enter new hour: Integer\n");
                 int hour = input.nextInt();
@@ -159,7 +153,7 @@ public class TimesheetApp {
                 }
             }
         } else {
-            System.out.println("Please add an employee to your database");
+            emptyDatabase();
         }
     }
 
@@ -169,9 +163,7 @@ public class TimesheetApp {
         if (database.getNumberOfEmployees() > 0) {
             printEmployees();
             String name = input.next();
-            if (database.findEmployee(name) == null) {
-                System.out.println("Employee does not exist...\n");
-            } else {
+            if (employeeExists(name)) {
                 Employee e = database.findEmployee(name);
                 System.out.print("Enter day number: Integer\n");
                 int number = input.nextInt();
@@ -185,7 +177,7 @@ public class TimesheetApp {
                 }
             }
         } else {
-            System.out.println("Please add an employee to your database");
+            emptyDatabase();
         }
     }
 
@@ -194,14 +186,12 @@ public class TimesheetApp {
         if (database.getNumberOfEmployees() > 0) {
             printEmployees();
             String name = input.next();
-            if (database.findEmployee(name) == null) {
-                System.out.println("Employee does not exist...\n");
-            } else {
+            if (employeeExists(name)) {
                 Employee e = database.findEmployee(name);
                 System.out.println(name + " has worked " + e.getHoursWorked() + " hours so far");
             }
         } else {
-            System.out.println("Please add an employee to your database");
+            emptyDatabase();
         }
     }
 
@@ -211,12 +201,18 @@ public class TimesheetApp {
         System.out.println(database.employeeNames());
     }
 
-//    private boolean nonExistentEmployee(String name) {
-//        if (database.findEmployee(name) == null) {
-//            System.out.println("Employee does not exist...");
-//            return true;
-//        }
-//        return false;
-//    }
+    // EFFECTS: checks if an employee does not exist
+    private boolean employeeExists(String name) {
+        if (database.findEmployee(name) == null) {
+            System.out.println("Employee does not exist...");
+            return false;
+        }
+        return true;
+    }
+
+    // EFFECTS: tells user to add an employee before doing anything else
+    private void emptyDatabase() {
+        System.out.println("Please add an employee to your database");
+    }
 
 }
