@@ -5,7 +5,6 @@ import java.util.List;
 
 // Represents all the employees in a company
 public class EmployeeDatabase {
-
     private List<Employee> database;
 
     //EFFECTS: creates a database to hold all the employee information

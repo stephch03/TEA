@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+// Represents an employee
 public class Employee {
     private String name;
     private ArrayList<Integer> hours;
@@ -20,14 +21,14 @@ public class Employee {
         name = newName;
     }
 
-    //REQUIRES: 0 <= hoursWorkedToday
+    //REQUIRES: 0 <= hoursWorkedToday <= 8
     //MODIFIES: this
     //EFFECTS: adds hours worked today to list of hours worked so far
     public void inputHours(int hoursWorkedToday) {
         hours.add(hoursWorkedToday);
     }
 
-    //REQUIRES: 1 <= dayNumber <= size of hours
+    //REQUIRES: 1 <= dayNumber <= size of hours, 0 <= newHours <= 8
     //MODIFIES: this
     //EFFECTS: changes the hours worked on the given day number of the work period
     public void updateHours(int dayNumber, int newHours) {

@@ -22,6 +22,10 @@ public class TimesheetApp {
         boolean keepGoing = true;
         String command = null;
         init();
+        System.out.println("Hello!\nPlease enter the first date of the pay period: MM-DD-YYYY");
+        String dateStart = input.next();
+        System.out.println("Please enter the last date of the pay period: MM-DD-YYYY");
+        String dateEnd = input.next();
         while (keepGoing) {
             displayMenu();
             command = input.next();
@@ -32,6 +36,7 @@ public class TimesheetApp {
                 processCommand(command);
             }
         }
+        System.out.println("Here is your timesheet for " + dateStart + " to " + dateEnd + ":\n");
         printTimesheet();
         System.out.println("\nGoodbye!");
     }
@@ -90,10 +95,11 @@ public class TimesheetApp {
         }
     }
 
+    // REQUIRES: employee exists
     // MODIFIES: this
     // EFFECTS: removes an employee from the database
     private void removeEmployee() {
-        if (emptyDatabase()) {
+        if (nonEmptyDatabase()) {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
@@ -106,18 +112,17 @@ public class TimesheetApp {
     // EFFECTS: prints timesheet of employee database to the screen
     private void printTimesheet() {
         if (database.getNumberOfEmployees() > 0) {
-            System.out.println("Here is your timesheet:\n");
             System.out.println(database.printTimesheet());
         } else {
             System.out.println("Your timesheet is empty");
         }
     }
 
-
+    // REQUIRES: employee exists
     // MODIFIES: this
     // EFFECTS: changes the name of an employee
     private void changeName() {
-        if (emptyDatabase()) {
+        if (nonEmptyDatabase()) {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
@@ -129,10 +134,11 @@ public class TimesheetApp {
         }
     }
 
+    // REQUIRES: employee exists, 0 <= hour <= 8
     // MODIFIES: this
     // EFFECTS: adds hours worked today to an employee
     private void addHours() {
-        if (emptyDatabase()) {
+        if (nonEmptyDatabase()) {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
@@ -148,10 +154,11 @@ public class TimesheetApp {
         }
     }
 
+    // REQUIRES: employee exists, 0 <= hour <= 8
     //MODIFIES: this
     //EFFECTS: edits employee's hours
     private void updateHours() {
-        if (emptyDatabase()) {
+        if (nonEmptyDatabase()) {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
@@ -172,7 +179,7 @@ public class TimesheetApp {
 
     // EFFECTS: prints out how many hours an employee has worked so far
     private void hoursWorked() {
-        if (emptyDatabase()) {
+        if (nonEmptyDatabase()) {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
@@ -196,8 +203,8 @@ public class TimesheetApp {
         return true;
     }
 
-    // EFFECTS: tells user to add an employee before doing anything else
-    private boolean emptyDatabase() {
+    // EFFECTS: tells user to add an employee if the database is empty
+    private boolean nonEmptyDatabase() {
         if (database.getNumberOfEmployees() == 0) {
             System.out.println("Please add an employee to your database");
             return false;
