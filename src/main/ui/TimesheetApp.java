@@ -22,10 +22,8 @@ public class TimesheetApp {
         boolean keepGoing = true;
         String command = null;
         init();
-        System.out.println("Hello!\nPlease enter the first date of the pay period: MM-DD-YYYY");
-        String dateStart = input.next();
-        System.out.println("Please enter the last date of the pay period: MM-DD-YYYY");
-        String dateEnd = input.next();
+        System.out.println("Hello!\nPlease enter the date of the pay period: MM-DD-YYYY to MM-DD-YYYY");
+        String date = input.next();
         while (keepGoing) {
             displayMenu();
             command = input.next();
@@ -36,7 +34,7 @@ public class TimesheetApp {
                 processCommand(command);
             }
         }
-        System.out.println("Here is your timesheet for " + dateStart + " to " + dateEnd + ":\n");
+        System.out.println("Here is your timesheet for " + date + ":\n");
         printTimesheet();
         System.out.println("\nGoodbye!");
     }
@@ -142,7 +140,7 @@ public class TimesheetApp {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
-                System.out.print("Enter new hour: Integer\n");
+                System.out.print("Enter new hour: 0 <= Integer <= 8\n");
                 int hour = input.nextInt();
                 if (hour >= 0 && hour <= 8) {
                     database.findEmployee(name).inputHours(hour);
@@ -154,24 +152,27 @@ public class TimesheetApp {
         }
     }
 
-    // REQUIRES: employee exists, 0 <= hour <= 8
-    //MODIFIES: this
-    //EFFECTS: edits employee's hours
+    // REQUIRES: employee exists, 0 <= hour <= 8, employee hours must not be empty,
+    //           1 <= number <= most recent day employee worked
+    // MODIFIES: this
+    // EFFECTS: edits employee's hours
     private void updateHours() {
         if (nonEmptyDatabase()) {
             printEmployees();
             String name = input.next();
-            if (employeeExists(name)) {
-                Employee e = database.findEmployee(name);
-                System.out.print("Enter day number: Integer\n");
+            if (database.findEmployee(name) == null || database.findEmployee(name).getHours().isEmpty()) {
+                System.out.println("The employee may either not exist or they may not have worked any hours yet");
+            } else {
+                System.out.print("Enter day number: 1 <= Integer <= most recent day employee worked\n");
                 int number = input.nextInt();
-                System.out.println("Enter new hour: Integer\n");
+                System.out.println("Enter new hour: 0 <= Integer <= 8\n");
                 int hour = input.nextInt();
-                if (hour >= 0 && hour <= 8 && number >= 1 && number <= e.getHours().size()) {
-                    e.updateHours(number, hour);
+                if (hour >= 0 && hour <= 8
+                        && number >= 1 && number <= database.findEmployee(name).getHours().size()) {
+                    database.findEmployee(name).updateHours(number, hour);
                     System.out.println(name + " worked " + hour + " hours on Day " + number + "\n");
                 } else {
-                    System.out.println("Please try again\n");
+                    System.out.println("Please make sure that you are complying with the input rules\n");
                 }
             }
         }
