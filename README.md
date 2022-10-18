@@ -17,6 +17,9 @@ so that this information can be forwarded to payroll.
 - As a user, I want to be able to remove an employee from the database.
 - As a user, I want to be able to print the timesheet.
 - As a user, I want to be able to input the pay period.
+- As a user, when I select the quit option from the application menu, I want to be reminded to save my employee
+database to file and have the option to do so or not.
+- As a user, when I start the application, I want to be given the option to load my employee database from file.
 
 ## *Future User Stories*
 - As a user, I want to be able to login as an employee.
