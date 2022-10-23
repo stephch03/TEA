@@ -20,7 +20,6 @@ class EmployeeDatabaseTest {
         databaseTest.addEmployee(b);
     }
 
-
     @Test
     public void employeeDatabaseConstructorTest() {
         assertEquals("12-31-2022", databaseTest.getDate());

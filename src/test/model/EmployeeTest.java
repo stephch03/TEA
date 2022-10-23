@@ -82,7 +82,6 @@ class EmployeeTest {
         assertEquals(10, employeeTest.getHoursWorked());
     }
 
-    //TODO
     @Test
     public void toJsonTest() {
     }
@@ -92,4 +91,11 @@ class EmployeeTest {
 
     }
 
+    @Test
+    public void clearHoursTest() {
+        assertEquals(3, employeeTest.getHours().size());
+        employeeTest.clearHours();
+        assertTrue(employeeTest.getHours().isEmpty());
+        assertEquals(0, employeeTest.getHoursWorked());
+    }
 }

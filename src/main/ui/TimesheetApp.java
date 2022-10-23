@@ -31,6 +31,7 @@ public class TimesheetApp {
         boolean keepGoing = true;
         String command = null;
         init();
+        System.out.println("\nHello!");
         while (keepGoing) {
             displayMenu();
             command = input.next();
@@ -41,14 +42,11 @@ public class TimesheetApp {
                 processCommand(command);
             }
         }
-        System.out.println("Here is your "  + database.getDate() + " timesheet:\n");
-        printTimesheet();
         System.out.println("\nGoodbye!");
     }
 
     // MODIFIES: this
     // EFFECTS: processes user command in the display menu
-    //TODO
     private void processCommand(String command) {
         if (command.equals("d")) {
             changeDate();
@@ -56,11 +54,21 @@ public class TimesheetApp {
             createEmployee();
         } else if (command.equals("r")) {
             removeEmployee();
+        } else if (command.equals("reset")) {
+            database.reset();
         } else if (command.equals("s")) {
             saveDatabase();
         } else if (command.equals("l")) {
             loadDatabase();
-        } else if (command.equals("n")) {
+        } else if (command.equals("p")) {
+            printTimesheet();
+        } else {
+            processEmployeeCommand(command);
+        }
+    }
+
+    private void processEmployeeCommand(String command) {
+        if (command.equals("n")) {
             changeName();
         } else if (command.equals("ah")) {
             addHours();
@@ -87,9 +95,11 @@ public class TimesheetApp {
         System.out.println("\td -> change date of Timesheet");
         System.out.println("\tae -> add Employee");
         System.out.println("\tr -> remove Employee");
+        System.out.println("\treset -> clear all employee's hours");
         System.out.println("\tl -> load Timesheet");
         System.out.println("\ts -> save Timesheet");
-        System.out.println("\tq -> quit and print Timesheet");
+        System.out.println("\tp -> print Timesheet");
+        System.out.println("\tq -> quit (remember to save)");
         System.out.println("\nOr, select from Employee Menu:");
         System.out.println("\tn -> change Employee's name");
         System.out.println("\tah -> add Employee's new hours");
@@ -97,15 +107,14 @@ public class TimesheetApp {
         System.out.println("\tg -> get Employee's hours worked so far");
     }
 
-
+    // REQUIRES: format of date must be MM-DD-YYYY
     // MODIFIES: this
-    //EFFECTS: changes the date of timesheet
+    // EFFECTS: changes the date of timesheet
     private void changeDate() {
         System.out.println("Please enter the starting date for this timesheet: MM-DD-YYYY");
         String date = input.next();
         database.changeDate(date);
     }
-
 
     // MODIFIES: this
     // EFFECTS: add a new employee to the database
@@ -139,8 +148,7 @@ public class TimesheetApp {
             jsonWriter.open();
             jsonWriter.write(database);
             jsonWriter.close();
-            System.out.println("Saved to " + JSON_STORE);
-//            System.out.println("Saved " + database.getName() + " to " + JSON_STORE);
+            System.out.println("Saved " + database.getDate() + " timesheet to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
@@ -149,8 +157,7 @@ public class TimesheetApp {
     private void loadDatabase() {
         try {
             database = jsonReader.read();
-            System.out.println("Loaded from " + JSON_STORE);
-//            System.out.println("Loaded " + database.getName() + " from " + JSON_STORE);
+            System.out.println("Loaded " + database.getDate() + " timesheet from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
@@ -159,6 +166,7 @@ public class TimesheetApp {
     // EFFECTS: prints timesheet of employee database to the screen
     private void printTimesheet() {
         if (database.getNumberOfEmployees() > 0) {
+            System.out.println("Here is your " + database.getDate() + " timesheet:\n");
             System.out.println(database.printTimesheet());
         } else {
             System.out.println("Your timesheet is empty");

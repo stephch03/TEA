@@ -96,4 +96,12 @@ public class EmployeeDatabase implements Writable {
 
         return jsonArray;
     }
+
+    //MODIFIES: this
+    //EFFECTS: clears database
+    public void reset() {
+        for (Employee employee : database) {
+            employee.clearHours();
+        }
+    }
 }
