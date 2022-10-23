@@ -82,4 +82,14 @@ class EmployeeTest {
         assertEquals(10, employeeTest.getHoursWorked());
     }
 
+    //TODO
+    @Test
+    public void toJsonTest() {
+    }
+
+    @Test
+    public void hoursToJsonTest() {
+
+    }
+
 }

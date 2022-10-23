@@ -12,7 +12,7 @@ class EmployeeDatabaseTest {
 
     @BeforeEach
     public void setup() {
-        databaseTest = new EmployeeDatabase();
+        databaseTest = new EmployeeDatabase("12-31-2022");
         a = new Employee("Ada Lovelace");
         b = new Employee("Bob Builder");;
         databaseTest.addEmployee(a);
@@ -23,6 +23,7 @@ class EmployeeDatabaseTest {
 
     @Test
     public void employeeDatabaseConstructorTest() {
+        assertEquals("12-31-2022", databaseTest.getDate());
         assertEquals(2, databaseTest.getNumberOfEmployees());
         assertEquals(5, a.getHoursWorked());
         assertEquals(0, b.getHoursWorked());
@@ -31,6 +32,13 @@ class EmployeeDatabaseTest {
         assertFalse(databaseTest.employeeNames().isEmpty());
         assertTrue(databaseTest.employeeNames().contains("Ada Lovelace"));
         assertTrue(databaseTest.employeeNames().contains("Bob Builder"));
+    }
+
+    @Test
+    public void changeDateTest() {
+        assertEquals("12-31-2022", databaseTest.getDate());
+        databaseTest.changeDate("12-01-2022");
+        assertEquals("12-01-2022", databaseTest.getDate());
     }
 
     @Test
@@ -99,4 +107,13 @@ class EmployeeDatabaseTest {
         assertEquals("Bob Builder : 0 hours", databaseTest.printTimesheet().get(0));
     }
 
+    //TODO
+    @Test
+    public void toJsonTest() {
+    }
+
+    @Test
+    public void databaseToJsonTest() {
+
+    }
 }

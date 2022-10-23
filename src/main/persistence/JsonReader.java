@@ -41,7 +41,8 @@ public class JsonReader {
 
     // EFFECTS: parses database from JSON object and returns it
     private EmployeeDatabase parseEmployeeDatabase(JSONObject jsonObject) {
-        EmployeeDatabase database = new EmployeeDatabase();
+        String date = jsonObject.getString("date");
+        EmployeeDatabase database = new EmployeeDatabase(date);
         addEmployees(database, jsonObject);
         return database;
     }

@@ -20,7 +20,6 @@ public class TimesheetApp {
 
     // EFFECTS: runs the timesheet application
     public TimesheetApp() throws FileNotFoundException {
-        database = new EmployeeDatabase();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         runTimesheet();
@@ -32,8 +31,6 @@ public class TimesheetApp {
         boolean keepGoing = true;
         String command = null;
         init();
-        System.out.println("Hello!\nPlease enter the date of the pay period: MM-DD-YYYY to MM-DD-YYYY");
-        String date = input.next();
         while (keepGoing) {
             displayMenu();
             command = input.next();
@@ -44,17 +41,20 @@ public class TimesheetApp {
                 processCommand(command);
             }
         }
-        System.out.println("Here is your timesheet for " + date + ":\n");
+        System.out.println("Here is your "  + database.getDate() + " timesheet:\n");
         printTimesheet();
         System.out.println("\nGoodbye!");
     }
 
     // MODIFIES: this
     // EFFECTS: processes user command in the display menu
+    //TODO
     private void processCommand(String command) {
-        if (command.equals("ae")) {
+        if (command.equals("d")) {
+            changeDate();
+        } else if (command.equals("ae")) {
             createEmployee();
-        } else if (command.equals("d")) {
+        } else if (command.equals("r")) {
             removeEmployee();
         } else if (command.equals("s")) {
             saveDatabase();
@@ -76,7 +76,7 @@ public class TimesheetApp {
     // MODIFIES: this
     // EFFECTS: initializes database
     private void init() {
-        database = new EmployeeDatabase();
+        database = new EmployeeDatabase("Undated");
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -84,8 +84,9 @@ public class TimesheetApp {
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nSelect from Main Menu:");
+        System.out.println("\td -> change date of Timesheet");
         System.out.println("\tae -> add Employee");
-        System.out.println("\td -> delete Employee");
+        System.out.println("\tr -> remove Employee");
         System.out.println("\tl -> load Timesheet");
         System.out.println("\ts -> save Timesheet");
         System.out.println("\tq -> quit and print Timesheet");
@@ -95,6 +96,16 @@ public class TimesheetApp {
         System.out.println("\tu -> update Employee's existing hours");
         System.out.println("\tg -> get Employee's hours worked so far");
     }
+
+
+    // MODIFIES: this
+    //EFFECTS: changes the date of timesheet
+    private void changeDate() {
+        System.out.println("Please enter the starting date for this timesheet: MM-DD-YYYY");
+        String date = input.next();
+        database.changeDate(date);
+    }
+
 
     // MODIFIES: this
     // EFFECTS: add a new employee to the database

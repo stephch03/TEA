@@ -10,10 +10,19 @@ import java.util.List;
 // Represents all the employees in a company
 public class EmployeeDatabase implements Writable {
     private List<Employee> database;
+    private String date;
 
     //EFFECTS: creates a database to hold all the employee information
-    public EmployeeDatabase() {
+    public EmployeeDatabase(String date) {
+        this.date = date;
         database = new ArrayList<>();
+    }
+
+    //REQUIRES: date must be formatted in MM-DD-YYYY
+    //MODIFIES: this
+    //EFFECTS: updates the date
+    public void changeDate(String newDate) {
+        this.date = newDate;
     }
 
     //REQUIRES: name must be formatted as FirstName LastName
@@ -61,6 +70,10 @@ public class EmployeeDatabase implements Writable {
 
     //getters
 
+    public String getDate() {
+        return date;
+    }
+
     public int getNumberOfEmployees() {
         return database.size();
     }
@@ -68,6 +81,7 @@ public class EmployeeDatabase implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
+        json.put("date", date);
         json.put("database", databaseToJson());
         return json;
     }
