@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents all the employees in a company
-public class EmployeeDatabase {
+public class EmployeeDatabase implements Writable {
     private List<Employee> database;
 
     //EFFECTS: creates a database to hold all the employee information
@@ -59,5 +63,23 @@ public class EmployeeDatabase {
 
     public int getNumberOfEmployees() {
         return database.size();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("database", databaseToJson());
+        return json;
+    }
+
+    // EFFECTS: returns employees in this database as a JSON array
+    private JSONArray databaseToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Employee e : database) {
+            jsonArray.put(e.toJson());
+        }
+
+        return jsonArray;
     }
 }

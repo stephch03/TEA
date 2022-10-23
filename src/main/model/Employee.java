@@ -1,9 +1,14 @@
 package model;
 
+import netscape.javascript.JSObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents an employee
-public class Employee {
+public class Employee implements Writable {
     private String name;
     private ArrayList<Integer> hours;
 
@@ -52,5 +57,25 @@ public class Employee {
 
     public ArrayList<Integer> getHours() {
         return hours;
+    }
+
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("hours", hoursToJson());
+        return json;
+    }
+
+    // EFFECTS: returns hours in this employee as a JSON array
+    private JSONArray hoursToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (int h : hours) {
+            jsonArray.put(h);
+        }
+
+        return jsonArray;
     }
 }

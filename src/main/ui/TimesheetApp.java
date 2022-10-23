@@ -2,17 +2,27 @@ package ui;
 
 import model.Employee;
 import model.EmployeeDatabase;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 // Timesheet entry application
 // Structure from CPSC 210 TellerApp
 public class TimesheetApp {
+    private static final String JSON_STORE = "./data/employeeDatabase.json";
     private EmployeeDatabase database;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the timesheet application
-    public TimesheetApp() {
+    public TimesheetApp() throws FileNotFoundException {
+        database = new EmployeeDatabase();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runTimesheet();
     }
 
@@ -46,6 +56,10 @@ public class TimesheetApp {
             createEmployee();
         } else if (command.equals("d")) {
             removeEmployee();
+        } else if (command.equals("s")) {
+            saveDatabase();
+        } else if (command.equals("l")) {
+            loadDatabase();
         } else if (command.equals("n")) {
             changeName();
         } else if (command.equals("ah")) {
@@ -72,6 +86,8 @@ public class TimesheetApp {
         System.out.println("\nSelect from Main Menu:");
         System.out.println("\tae -> add Employee");
         System.out.println("\td -> delete Employee");
+        System.out.println("\tl -> load Timesheet");
+        System.out.println("\ts -> save Timesheet");
         System.out.println("\tq -> quit and print Timesheet");
         System.out.println("\nOr, select from Employee Menu:");
         System.out.println("\tn -> change Employee's name");
@@ -104,6 +120,28 @@ public class TimesheetApp {
                 database.removeEmployee(name);
                 System.out.println("\n" + name + " has been removed from the database");
             }
+        }
+    }
+
+    private void saveDatabase() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(database);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE);
+//            System.out.println("Saved " + database.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    private void loadDatabase() {
+        try {
+            database = jsonReader.read();
+            System.out.println("Loaded from " + JSON_STORE);
+//            System.out.println("Loaded " + database.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
