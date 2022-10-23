@@ -7,6 +7,8 @@ import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 // Timesheet entry application
@@ -197,11 +199,12 @@ public class TimesheetApp {
             printEmployees();
             String name = input.next();
             if (employeeExists(name)) {
+                printEmployeeHours(name);
                 System.out.print("Enter new hour: 0 <= Integer <= 8\n");
                 int hour = input.nextInt();
                 if (hour >= 0 && hour <= 8) {
                     database.findEmployee(name).inputHours(hour);
-                    System.out.println(name + " worked " + hour + " hours today\n");
+                    printEmployeeHours(name);
                 } else {
                     System.out.println(name + " cannot work " + hour + " hours\n");
                 }
@@ -220,14 +223,15 @@ public class TimesheetApp {
             if (database.findEmployee(name) == null || database.findEmployee(name).getHours().isEmpty()) {
                 System.out.println("The employee may either not exist or they may not have worked any hours yet");
             } else {
-                System.out.print("Enter day number: 1 <= Integer <= most recent day employee worked\n");
+                printEmployeeHours(name);
+                System.out.print("Enter day number you'd like to change\n");
                 int number = input.nextInt();
                 System.out.println("Enter new hour: 0 <= Integer <= 8\n");
                 int hour = input.nextInt();
                 if (hour >= 0 && hour <= 8
                         && number >= 1 && number <= database.findEmployee(name).getHours().size()) {
                     database.findEmployee(name).updateHours(number, hour);
-                    System.out.println(name + " worked " + hour + " hours on Day " + number + "\n");
+                    printEmployeeHours(name);
                 } else {
                     System.out.println("Please make sure that you are complying with the input rules\n");
                 }
@@ -268,6 +272,13 @@ public class TimesheetApp {
             return false;
         }
         return true;
+    }
+
+    // EFFECTS: returns a list of the selected employee's hours so far
+    private void printEmployeeHours(String name) {
+        for (int i = 0; i < database.findEmployee(name).hoursSize(); i++) {
+            System.out.println("Day " + (i + 1) + ": " + database.findEmployee(name).getHours().get(i) + " hours");
+        }
     }
 
 }

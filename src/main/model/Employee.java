@@ -66,6 +66,10 @@ public class Employee implements Writable {
         return hours;
     }
 
+    public int hoursSize() {
+        return hours.size();
+    }
+
 
     @Override
     public JSONObject toJson() {

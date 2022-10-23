@@ -39,6 +39,14 @@ public class EmployeeDatabase implements Writable {
         database.remove(findEmployee(name));
     }
 
+    //MODIFIES: this
+    //EFFECTS: clears database
+    public void reset() {
+        for (Employee employee : database) {
+            employee.clearHours();
+        }
+    }
+
     //REQUIRES: name must be formatted as FirstName LastName
     //EFFECTS: returns employee with given name, return null if employee does not exist
     public Employee findEmployee(String name) {
@@ -54,7 +62,7 @@ public class EmployeeDatabase implements Writable {
     public List<String> printTimesheet() {
         List<String> timesheet = new ArrayList<>();
         for (Employee e : database) {
-            timesheet.add(e.getName() + " : " + e.getHoursWorked() + " hours");
+            timesheet.add(e.getName() + ": " + e.getHours() + ", " + e.getHoursWorked() + " hours total");
         }
         return timesheet;
     }
@@ -95,13 +103,5 @@ public class EmployeeDatabase implements Writable {
         }
 
         return jsonArray;
-    }
-
-    //MODIFIES: this
-    //EFFECTS: clears database
-    public void reset() {
-        for (Employee employee : database) {
-            employee.clearHours();
-        }
     }
 }

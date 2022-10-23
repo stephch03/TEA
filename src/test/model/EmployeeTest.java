@@ -32,7 +32,7 @@ class EmployeeTest {
 
     @Test
     public void inputHoursTest() {
-        assertEquals(3, employeeTest.getHours().size());
+        assertEquals(3, employeeTest.hoursSize());
         employeeTest.inputHours(3);
         assertEquals(4, employeeTest.getHours().size());
         assertEquals(5, employeeTest.getHours().get(0));
