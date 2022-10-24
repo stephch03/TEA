@@ -63,5 +63,10 @@ public class JsonReader {
         String name = jsonObject.getString("name");
         Employee e = new Employee(name);
         database.addEmployee(e);
+        JSONArray hours = jsonObject.getJSONArray("hours");
+        for (Object o : hours) {
+            Number h = (Number) o;
+            e.getHours().add(h.intValue());
+        }
     }
 }

@@ -7,8 +7,6 @@ import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 // Timesheet entry application
@@ -52,10 +50,6 @@ public class TimesheetApp {
     private void processCommand(String command) {
         if (command.equals("d")) {
             changeDate();
-        } else if (command.equals("ae")) {
-            createEmployee();
-        } else if (command.equals("r")) {
-            removeEmployee();
         } else if (command.equals("reset")) {
             database.reset();
         } else if (command.equals("s")) {
@@ -70,7 +64,11 @@ public class TimesheetApp {
     }
 
     private void processEmployeeCommand(String command) {
-        if (command.equals("n")) {
+        if (command.equals("ae")) {
+            createEmployee();
+        } else if (command.equals("r")) {
+            removeEmployee();
+        } else if (command.equals("n")) {
             changeName();
         } else if (command.equals("ah")) {
             addHours();
@@ -95,14 +93,14 @@ public class TimesheetApp {
     private void displayMenu() {
         System.out.println("\nSelect from Main Menu:");
         System.out.println("\td -> change date of Timesheet");
-        System.out.println("\tae -> add Employee");
-        System.out.println("\tr -> remove Employee");
         System.out.println("\treset -> clear all employee's hours");
         System.out.println("\tl -> load Timesheet");
         System.out.println("\ts -> save Timesheet");
         System.out.println("\tp -> print Timesheet");
         System.out.println("\tq -> quit (remember to save)");
         System.out.println("\nOr, select from Employee Menu:");
+        System.out.println("\tae -> add Employee");
+        System.out.println("\tr -> remove Employee");
         System.out.println("\tn -> change Employee's name");
         System.out.println("\tah -> add Employee's new hours");
         System.out.println("\tu -> update Employee's existing hours");
@@ -113,7 +111,7 @@ public class TimesheetApp {
     // MODIFIES: this
     // EFFECTS: changes the date of timesheet
     private void changeDate() {
-        System.out.println("Please enter the starting date for this timesheet: MM-DD-YYYY");
+        System.out.println("Please enter the period of this timesheet: MM-DD-YYYY to MM-DD-YYYY");
         String date = input.next();
         database.changeDate(date);
     }

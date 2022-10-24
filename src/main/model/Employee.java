@@ -83,7 +83,7 @@ public class Employee implements Writable {
     private JSONArray hoursToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (int h : hours) {
+        for (Integer h : hours) {
             jsonArray.put(h);
         }
 
