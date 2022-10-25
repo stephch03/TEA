@@ -12,7 +12,7 @@ class EmployeeDatabaseTest {
 
     @BeforeEach
     public void setup() {
-        databaseTest = new EmployeeDatabase("12-31-2022");
+        databaseTest = new EmployeeDatabase();
         a = new Employee("Ada Lovelace");
         b = new Employee("Bob Builder");;
         databaseTest.addEmployee(a);
@@ -22,7 +22,7 @@ class EmployeeDatabaseTest {
 
     @Test
     public void employeeDatabaseConstructorTest() {
-        assertEquals("12-31-2022", databaseTest.getDate());
+        assertEquals("Undated", databaseTest.getDate());
         assertEquals(2, databaseTest.getNumberOfEmployees());
         assertEquals(5, a.getHoursWorked());
         assertEquals(0, b.getHoursWorked());
@@ -35,7 +35,7 @@ class EmployeeDatabaseTest {
 
     @Test
     public void changeDateTest() {
-        assertEquals("12-31-2022", databaseTest.getDate());
+        assertEquals("Undated", databaseTest.getDate());
         databaseTest.changeDate("12-01-2022");
         assertEquals("12-01-2022", databaseTest.getDate());
     }
@@ -92,8 +92,8 @@ class EmployeeDatabaseTest {
         assertEquals(2, databaseTest.getNumberOfEmployees());
         databaseTest.printTimesheet();
         assertEquals(2, databaseTest.printTimesheet().size());
-        assertEquals("Ada Lovelace : 5 hours", databaseTest.printTimesheet().get(0));
-        assertEquals("Bob Builder : 0 hours", databaseTest.printTimesheet().get(1));
+        assertEquals("Ada Lovelace: [5], 5 hours total", databaseTest.printTimesheet().get(0));
+        assertEquals("Bob Builder: [], 0 hours total", databaseTest.printTimesheet().get(1));
     }
 
     @Test
@@ -103,7 +103,7 @@ class EmployeeDatabaseTest {
         assertEquals(1, databaseTest.getNumberOfEmployees());
         databaseTest.printTimesheet();
         assertEquals(1, databaseTest.printTimesheet().size());
-        assertEquals("Bob Builder : 0 hours", databaseTest.printTimesheet().get(0));
+        assertEquals("Bob Builder: [], 0 hours total", databaseTest.printTimesheet().get(0));
     }
 
     //TODO

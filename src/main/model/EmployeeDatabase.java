@@ -9,15 +9,13 @@ import java.util.List;
 
 // Represents all the employees in a company
 public class EmployeeDatabase implements Writable {
-//    public static final String INITIAL_DATE = "Undated";
+    public static final String INITIAL_DATE = "Undated";
     private List<Employee> database;
     private String date;
 
     //EFFECTS: creates a database to hold all the employee information and date of the pay period
-    public EmployeeDatabase(String date) {
-//        date = INITIAL_DATE;
-        this.date = date;
-
+    public EmployeeDatabase() {
+        date = INITIAL_DATE;
         database = new ArrayList<>();
     }
 
