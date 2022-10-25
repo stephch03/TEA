@@ -106,6 +106,39 @@ class EmployeeDatabaseTest {
         assertEquals("Bob Builder: [], 0 hours total", databaseTest.printTimesheet().get(0));
     }
 
+    @Test
+    public void resetHoursTest() {
+        assertEquals(2, databaseTest.getNumberOfEmployees());
+        assertFalse(a.getHours().isEmpty());
+        assertTrue(b.getHours().isEmpty());
+        assertEquals(5, a.getHoursWorked());
+        assertEquals(0, b.getHoursWorked());
+        databaseTest.reset();
+        assertEquals(2, databaseTest.getNumberOfEmployees());
+        assertEquals(0, a.getHoursWorked());
+        assertEquals(0, b.getHoursWorked());
+        assertTrue(a.getHours().isEmpty());
+        assertTrue(b.getHours().isEmpty());
+    }
+
+    @Test
+    public void resetAlreadyEmptyHoursTest() {
+        assertEquals(2, databaseTest.getNumberOfEmployees());
+        assertFalse(a.getHours().isEmpty());
+        assertTrue(b.getHours().isEmpty());
+        assertEquals(5, a.getHoursWorked());
+        assertEquals(0, b.getHoursWorked());
+        a.clearHours();
+        assertEquals(0, a.getHoursWorked());
+        assertTrue(a.getHours().isEmpty());
+        databaseTest.reset();
+        assertEquals(2, databaseTest.getNumberOfEmployees());
+        assertEquals(0, a.getHoursWorked());
+        assertEquals(0, b.getHoursWorked());
+        assertTrue(a.getHours().isEmpty());
+        assertTrue(b.getHours().isEmpty());
+    }
+
     //TODO
     @Test
     public void toJsonTest() {
