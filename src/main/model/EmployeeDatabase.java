@@ -9,12 +9,15 @@ import java.util.List;
 
 // Represents all the employees in a company
 public class EmployeeDatabase implements Writable {
+//    public static final String INITIAL_DATE = "Undated";
     private List<Employee> database;
     private String date;
 
-    //EFFECTS: creates a database to hold all the employee information
+    //EFFECTS: creates a database to hold all the employee information and date of the pay period
     public EmployeeDatabase(String date) {
+//        date = INITIAL_DATE;
         this.date = date;
+
         database = new ArrayList<>();
     }
 
@@ -58,7 +61,7 @@ public class EmployeeDatabase implements Writable {
         return null;
     }
 
-    //EFFECTS: returns EmployeeName : # hours worked for each employee in database
+    //EFFECTS: returns EmployeeName: list of hours worked, # hours total for each employee in database
     public List<String> printTimesheet() {
         List<String> timesheet = new ArrayList<>();
         for (Employee e : database) {

@@ -157,7 +157,7 @@ public class TimesheetApp {
     private void loadDatabase() {
         try {
             database = jsonReader.read();
-            System.out.println("Loaded " + database.getDate() + " timesheet from " + JSON_STORE);
+            System.out.println("Loaded " + " timesheet from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
