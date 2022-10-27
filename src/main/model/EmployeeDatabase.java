@@ -83,7 +83,11 @@ public class EmployeeDatabase implements Writable {
         return date;
     }
 
-    public int getNumberOfEmployees() {
+    public List<Employee> getEmployees() {
+        return database;
+    }
+
+    public int getNumEmployees() {
         return database.size();
     }
 

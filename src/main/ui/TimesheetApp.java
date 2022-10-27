@@ -165,7 +165,7 @@ public class TimesheetApp {
 
     // EFFECTS: prints timesheet of employee database to the screen
     private void printTimesheet() {
-        if (database.getNumberOfEmployees() > 0) {
+        if (database.getNumEmployees() > 0) {
             System.out.println("Here is your " + database.getDate() + " timesheet:\n");
             System.out.println(database.printTimesheet());
         } else {
@@ -265,7 +265,7 @@ public class TimesheetApp {
 
     // EFFECTS: tells user to add an employee if the database is empty
     private boolean nonEmptyDatabase() {
-        if (database.getNumberOfEmployees() == 0) {
+        if (database.getNumEmployees() == 0) {
             System.out.println("Please add an employee to your database");
             return false;
         }

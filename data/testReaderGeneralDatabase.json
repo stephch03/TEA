@@ -1,0 +1,16 @@
+{
+  "date": "Undated",
+  "database": [
+    {
+      "hours": [
+        6,
+        8
+      ],
+      "name": "Bob Bobby"
+    },
+    {
+      "hours": [0],
+      "name": "Larry Larson"
+    }
+  ]
+}
