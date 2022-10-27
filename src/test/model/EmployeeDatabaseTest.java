@@ -2,6 +2,7 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeDatabaseTest {
@@ -14,7 +15,7 @@ class EmployeeDatabaseTest {
     public void setup() {
         databaseTest = new EmployeeDatabase();
         a = new Employee("Ada Lovelace");
-        b = new Employee("Bob Builder");;
+        b = new Employee("Bob Builder");
         databaseTest.addEmployee(a);
         a.inputHours(5);
         databaseTest.addEmployee(b);
@@ -139,13 +140,4 @@ class EmployeeDatabaseTest {
         assertTrue(b.getHours().isEmpty());
     }
 
-    //TODO
-    @Test
-    public void toJsonTest() {
-    }
-
-    @Test
-    public void databaseToJsonTest() {
-
-    }
 }

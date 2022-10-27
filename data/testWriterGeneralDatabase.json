@@ -2,7 +2,10 @@
     "date": "Undated",
     "database": [
         {
-            "hours": [],
+            "hours": [
+                6,
+                8
+            ],
             "name": "Bob Bobby"
         },
         {

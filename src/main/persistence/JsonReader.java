@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+
+// Represents a reader that reads database from JSON data stored in file
 // Sourced from CPSC 210 JsonSerializationDemo
 public class JsonReader {
     private String source;
@@ -47,7 +49,7 @@ public class JsonReader {
     }
 
     // MODIFIES: database
-    // EFFECTS: parses employees from JSON object and adds them to workroom
+    // EFFECTS: parses employees from JSON object and adds them to database
     private void addEmployees(EmployeeDatabase database, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("database");
         for (Object json : jsonArray) {
@@ -57,7 +59,7 @@ public class JsonReader {
     }
 
     // MODIFIES: database
-    // EFFECTS: parses employee from JSON object and adds it to database
+    // EFFECTS: parses employee from JSON object and adds them to database
     private void addEmployee(EmployeeDatabase database, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Employee e = new Employee(name);

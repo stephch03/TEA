@@ -2,12 +2,13 @@ package persistence;
 
 import model.EmployeeDatabase;
 import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-// Sourced from CPSC 210 JsonSerializationDemo
 // Represents a writer that writes JSON representation of Employee Database to file
+// Sourced from CPSC 210 JsonSerializationDemo
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
