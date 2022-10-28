@@ -1,8 +1,10 @@
 package model;
 
+import netscape.javascript.JSObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents an employee
@@ -17,7 +19,7 @@ public class Employee implements Writable {
         this.name = name;
     }
 
-    //REQUIRES: name must be formatted as FirstName LastName
+    //REQUIRES: name must be formatted as FirstName LastName, and be different from the original name
     //MODIFIES: this
     //EFFECTS: sets the name of an employee
     public void changeName(String newName) {
@@ -38,10 +40,11 @@ public class Employee implements Writable {
         hours.set((dayNumber - 1), newHours);
     }
 
+    //REQUIRES: hours is not empty
     //MODIFIES: this
     //EFFECTS: empties the list of hours
     public void clearHours() {
-        hours = new ArrayList<>();
+        hours = new ArrayList<Integer>();
     }
 
     //EFFECTS: returns a sum of the total hours worked so far
@@ -66,6 +69,7 @@ public class Employee implements Writable {
     public int hoursSize() {
         return hours.size();
     }
+
 
     @Override
     public JSONObject toJson() {
