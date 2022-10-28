@@ -41,7 +41,7 @@ public class EmployeeDatabase implements Writable {
     }
 
     //MODIFIES: this
-    //EFFECTS: clears database
+    //EFFECTS: clears all employee's hours
     public void reset() {
         for (Employee employee : database) {
             employee.clearHours();

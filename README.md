@@ -11,17 +11,21 @@ Upon management's approval of the hours, the application will summarize the numb
 so that this information can be forwarded to payroll.
 
 ## *User Stories*
-- As a user, I want to be able to create a new employee and add it to an employee database.
-- As a user, I want to be able to select an employee and view the number of hours they worked.
-- As a user, I want to be able to edit the employee's hours.
-- As a user, I want to be able to remove an employee from the database.
-- As a user, I want to be able to print the timesheet.
-- As a user, I want to be able to input the pay period.
-- As a user, when I select the quit option from the application menu, I want to be reminded to save my employee
-database to file and have the option to do so or not.
+
 - As a user, when I start the application, I want to be given the option to load my employee database from file.
+- As a user, I want to be able to change the date of the timesheet.
+- As a user, I want to be able to reset all employee's hours.
+- As a user, I want to be able to print the timesheet.
+- As a user, when I quit the application, I want to be given the option to save my current database.
+- As a user, I want to be able to create a new employee and add it to an employee database.
+- As a user, I want to be able to remove an employee from the database.
+- As a user, I want to be able to change an employee's name.
+- As a user, I want to be able to add hours to an employee.
+- As a user, I want to be able to update an employee's existing hours.
+- As a user, I want to be able to select an employee and view the number of hours they worked.
 
 ## *Future User Stories*
+
 - As a user, I want to be able to login as an employee.
 - As a user, I want to be able to login as a manager.
 - As a user, I want to be able to approve of an employee's hours.

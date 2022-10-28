@@ -47,6 +47,8 @@ public class JsonWriterTest extends JsonTest {
             EmployeeDatabase database = new EmployeeDatabase();
             database.addEmployee(new Employee("Bob Bobby"));
             database.addEmployee(new Employee("Larry Larson"));
+            database.findEmployee("Bob Bobby").inputHours(6);
+            database.findEmployee("Bob Bobby").inputHours(8);
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralDatabase.json");
             writer.open();
             writer.write(database);
