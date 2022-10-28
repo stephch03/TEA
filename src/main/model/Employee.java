@@ -1,10 +1,8 @@
 package model;
 
-import netscape.javascript.JSObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
-
 import java.util.ArrayList;
 
 // Represents an employee
