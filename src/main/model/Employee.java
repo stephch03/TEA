@@ -82,9 +82,11 @@ public class Employee implements Writable {
     // EFFECTS: returns hours in this employee as a JSON array
     private JSONArray hoursToJson() {
         JSONArray jsonArray = new JSONArray();
+
         for (Integer h : hours) {
             jsonArray.put(h);
         }
+
         return jsonArray;
     }
 }
