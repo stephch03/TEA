@@ -32,6 +32,7 @@ public class TimesheetApp {
         String command = null;
         init();
         System.out.println("\nHello!");
+        handleLoad();
         while (keepGoing) {
             displayMenu();
             command = input.next();
@@ -42,8 +43,69 @@ public class TimesheetApp {
                 processCommand(command);
             }
         }
+        handleSave();
         System.out.println("\nGoodbye!");
     }
+
+    // MODIFIES: this
+    // EFFECTS: processes user command to load
+    private void handleLoad() {
+        boolean keepGoing = true;
+        while (keepGoing) {
+            System.out.println("\nWould you like to load a previous database or start a new database? Load or new");
+            String response = input.next();
+            response = response.toLowerCase();
+            if (response.equals("load")) {
+                loadDatabase();
+                keepGoing = false;
+            } else if (response.equals("new")) {
+                keepGoing = false;
+            } else {
+                System.out.println("Sorry your request could not be recognized");
+            }
+        }
+    }
+
+    private void loadDatabase() {
+        try {
+            database = jsonReader.read();
+            System.out.println("Loaded " + database.getDate() + " timesheet from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Sorry, there is no existing file");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: processes user command to save
+    private void handleSave() {
+        boolean keepGoing = true;
+        while (keepGoing) {
+            System.out.println("\nWould you like to save your current database? Yes or no");
+            String response = input.next();
+            response = response.toLowerCase();
+            if (response.equals("yes")) {
+                saveDatabase();
+                keepGoing = false;
+            } else if (response.equals("no")) {
+                keepGoing = false;
+            } else {
+                System.out.println("Sorry your request could not be recognized");
+            }
+        }
+    }
+
+    // EFFECTS: saves database to file
+    private void saveDatabase() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(database);
+            jsonWriter.close();
+            System.out.println("Saved " + database.getDate() + " timesheet to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
 
     // MODIFIES: this
     // EFFECTS: processes user command in the display menu
@@ -52,19 +114,9 @@ public class TimesheetApp {
             changeDate();
         } else if (command.equals("reset")) {
             database.reset();
-        } else if (command.equals("s")) {
-            saveDatabase();
-        } else if (command.equals("l")) {
-            loadDatabase();
         } else if (command.equals("p")) {
             printTimesheet();
-        } else {
-            processEmployeeCommand(command);
-        }
-    }
-
-    private void processEmployeeCommand(String command) {
-        if (command.equals("ae")) {
+        } else if (command.equals("ae")) {
             createEmployee();
         } else if (command.equals("r")) {
             removeEmployee();
@@ -94,8 +146,6 @@ public class TimesheetApp {
         System.out.println("\nSelect from Main Menu:");
         System.out.println("\td -> change date of Timesheet");
         System.out.println("\treset -> clear all employee's hours");
-        System.out.println("\tl -> load Timesheet");
-        System.out.println("\ts -> save Timesheet");
         System.out.println("\tp -> print Timesheet");
         System.out.println("\tq -> quit (remember to save)");
         System.out.println("\nOr, select from Employee Menu:");
@@ -140,26 +190,6 @@ public class TimesheetApp {
                 database.removeEmployee(name);
                 System.out.println("\n" + name + " has been removed from the database");
             }
-        }
-    }
-
-    private void saveDatabase() {
-        try {
-            jsonWriter.open();
-            jsonWriter.write(database);
-            jsonWriter.close();
-            System.out.println("Saved " + database.getDate() + " timesheet to " + JSON_STORE);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
-        }
-    }
-
-    private void loadDatabase() {
-        try {
-            database = jsonReader.read();
-            System.out.println("Loaded " + database.getDate() + " timesheet from " + JSON_STORE);
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
