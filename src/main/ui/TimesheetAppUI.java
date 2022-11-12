@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 
 // Sourced from:
@@ -54,14 +56,14 @@ public class TimesheetAppUI extends JFrame {
      */
     private void addButtonPanel() {
         JPanel buttonPanel = new JPanel();
-        frame.setLayout(new GridLayout(4, 2));
+        frame.setLayout(new GridLayout(10, 1));
 
         frame.add(new JButton(new AddEmployeeAction()));
         frame.add(new JButton(new RemoveEmployeeAction()));
         frame.add(new JButton(new ChangeEmployeeNameAction()));
-//        frame.add(new JButton(new AddEmployeeHourAction()));
-//        frame.add(new JButton(new UpdateEmployeeHourAction()));
-//        frame.add(new JButton(new GetHourAction()));
+        frame.add(new JButton(new AddEmployeeHourAction()));
+        frame.add(new JButton(new UpdateEmployeeHourAction()));
+        frame.add(new JButton(new GetHourAction()));
 
 
 //        frame.add(new JButton(new ChangeDateAction()));
@@ -76,68 +78,6 @@ public class TimesheetAppUI extends JFrame {
 
         panel.add(buttonPanel, BorderLayout.WEST);
     }
-
-    //    /**
-//     * Adds menu bar.
-//     */
-    private void addMenu() {
-        JMenuBar menuBar = new JMenuBar();
-        JMenu systemMenu = new JMenu("System");
-//        addMenuItem(systemMenu, new ChangeDateAction(),
-//                KeyStroke.getKeyStroke("control D"));
-//        addMenuItem(systemMenu, new ResetAction(),
-//                KeyStroke.getKeyStroke("control R"));
-//        addMenuItem(systemMenu, new DisplayTimesheetAction(),
-//                KeyStroke.getKeyStroke("control P"));
-//        addMenuItem(systemMenu, new QuitAndSaveAction(),
-//                KeyStroke.getKeyStroke("control Q"));
-        menuBar.add(systemMenu);
-
-        JMenu employeeMenu = new JMenu("Employee");
-        addMenuItem(employeeMenu, new AddEmployeeAction(),
-                KeyStroke.getKeyStroke("control A"));
-        addMenuItem(employeeMenu, new RemoveEmployeeAction(),
-                KeyStroke.getKeyStroke("control R"));
-        addMenuItem(employeeMenu, new ChangeEmployeeNameAction(),
-                KeyStroke.getKeyStroke("control N"));
-//        addMenuItem(employeeMenu, new AddEmployeeHourAction(),
-//                KeyStroke.getKeyStroke("control H"));
-//        addMenuItem(employeeMenu, new UpdateEmployeeHourAction(),
-//                KeyStroke.getKeyStroke("control U"));
-//        addMenuItem(employeeMenu, new GetHourAction(),
-//                KeyStroke.getKeyStroke("control G"));
-        menuBar.add(employeeMenu);
-
-        setJMenuBar(menuBar);
-    }
-
-
-    /**
-     * Adds an item with given handler to the given menu
-     *
-     * @param theMenu     menu to which new item is added
-     * @param action      handler for new menu item
-     * @param accelerator keystroke accelerator for this menu item
-     */
-    private void addMenuItem(JMenu theMenu, AbstractAction action, KeyStroke accelerator) {
-        JMenuItem menuItem = new JMenuItem(action);
-        menuItem.setMnemonic(menuItem.getText().charAt(0));
-        menuItem.setAccelerator(accelerator);
-        theMenu.add(menuItem);
-    }
-
-
-    /**
-     * Helper to create print options combo box
-     *
-     * @return the combo box
-     */
-//    private JComboBox<String> createPrintCombo() {
-//        printCombo = new JComboBox<String>();
-//        printCombo.addItem(FILE_DESCRIPTOR);
-//        printCombo.addItem(SCREEN_DESCRIPTOR);
-//        return printCombo;
-//    }
 
 
     /**
@@ -160,7 +100,8 @@ public class TimesheetAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String name = JOptionPane.showInputDialog("What is your name?", null);
+            String name = JOptionPane.showInputDialog("Enter the FirstName LastName of the employee ",
+                    null);
             Employee e = new Employee(name);
             ed.addEmployee(e);
         }
@@ -177,15 +118,22 @@ public class TimesheetAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String name = (String) JOptionPane.showInputDialog(
-                    frame,
-                    "Select an employee:\"",
-                    "Remove Employee",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    ed.employeeNames().toArray(),
-                    null);
-            ed.removeEmployee(name);
+            if (ed.getNumEmployees() == 0) {
+                JOptionPane.showMessageDialog(frame,
+                        "There are no employees in the database",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                String name = (String) JOptionPane.showInputDialog(
+                        frame,
+                        "Select an employee:",
+                        "Remove Employee",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        ed.employeeNames().toArray(),
+                        null);
+                ed.removeEmployee(name);
+            }
         }
     }
 
@@ -201,142 +149,144 @@ public class TimesheetAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String name = (String) JOptionPane.showInputDialog(
-                    frame,
-                    "Select an employee:\"",
-                    "Change Employee Name",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    ed.employeeNames().toArray(),
-                    null);
-            String newName = JOptionPane.showInputDialog("Change " + name + " to:", null);
-            ed.findEmployee(name).changeName(newName);
+            if (ed.getNumEmployees() == 0) {
+                JOptionPane.showMessageDialog(frame,
+                        "There are no employees in the database",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                String name = (String) JOptionPane.showInputDialog(frame, "Select an employee:",
+                        "Change Employee Name", JOptionPane.PLAIN_MESSAGE, null, ed.employeeNames().toArray(),
+                        null);
+                if (name != null) {
+                    String newName = JOptionPane.showInputDialog("Change " + name + " to:", null);
+                    if (newName != null) {
+                        ed.findEmployee(name).changeName(newName);
+                    }
+                }
+            }
         }
     }
 
 
-//    /**
-//     * Represents the action to be taken when the user wants to remove
-//     * a code from the system.
-//     */
-//    private class RemoveCodeAction extends AbstractAction {
-//
-//        RemoveCodeAction() {
-//            super("Remove Code");
-//        }
-//
-//        @Override
-//        public void actionPerformed(ActionEvent evt) {
-//            AlarmCode alarmCode = new AlarmCode(kp.getCode());
-//            kp.clearCode();
-//            try {
-//                ac.removeCode(alarmCode);
-//            } catch (NotValidCodeException e) {
-//                JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//            } catch (CodeException e) {
-//                JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//            } catch (LastCodeException e) {
-//                JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Represents the action to be taken when the user wants to arm
-//     * the system.
-//     */
-//    private class ArmAction extends AbstractAction {
-//
-//        ArmAction() {
-//            super("Arm System");
-//        }
-//
-//        @Override
-//        public void actionPerformed(ActionEvent evt) {
-//            AlarmCode alarmCode = new AlarmCode(kp.getCode());
-//            kp.clearCode();
-//            try {
-//                ac.arm(alarmCode);
-//            } catch (SystemNotReadyException e) {
-//                JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//            } catch (CodeException e) {
-//                JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Represents the action to be taken when the user wants to
-//     * disarm the system.
-//     */
-//    private class DisarmAction extends AbstractAction {
-//
-//        DisarmAction() {
-//            super("Disarm System");
-//        }
-//
-//        @Override
-//        public void actionPerformed(ActionEvent evt) {
-//            AlarmCode alarmCode = new AlarmCode(kp.getCode());
-//            kp.clearCode();
-//
-//            try {
-//                ac.disarm(alarmCode);
-//            } catch (CodeException e) {
-//                JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Represents the action to be taken when the user wants to
-//     * print the event log.
-//     */
-//    private class PrintLogAction extends AbstractAction {
-//        PrintLogAction() {
-//            super("Print log to...");
-//        }
-//
-//        @Override
-//        public void actionPerformed(ActionEvent evt) {
-//            String selected = (String) printCombo.getSelectedItem();
-//            LogPrinter lp;
-//            try {
-//                if (selected.equals(FILE_DESCRIPTOR))
-//                    lp = new FilePrinter();
-//                else {
-//                    lp = new ScreenPrinter(AlarmControllerUI.this);
-//                    desktop.add((ScreenPrinter) lp);
-//                }
-//
-//                lp.printLog(EventLog.getInstance());
-//            } catch (LogException e) {
-//                JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Represents the action to be taken when the user wants to
-//     * clear the event log.
-//     */
-//    private class ClearLogAction extends AbstractAction {
-//        ClearLogAction() {
-//            super("Clear log");
-//        }
-//
-//        @Override
-//        public void actionPerformed(ActionEvent evt) {
-//            EventLog.getInstance().clear();
-//        }
-//    }
+    private class AddEmployeeHourAction extends AbstractAction {
+
+        AddEmployeeHourAction() {
+            super("Add Employee Hour");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            if (ed.getNumEmployees() == 0) {
+                JOptionPane.showMessageDialog(frame,
+                        "There are no employees in the database",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                String name = (String) JOptionPane.showInputDialog(frame, "Select an employee:",
+                        "Add Employee Hour", JOptionPane.PLAIN_MESSAGE, null, ed.employeeNames().toArray(),
+                        null);
+                if (name != null) {
+                    Object[] hourOptions = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
+                    String hour = (String) JOptionPane.showInputDialog(frame, "Select the number of hours that "
+                                    + name + " worked today:", "Add Employee Hour", JOptionPane.PLAIN_MESSAGE,
+                            null, hourOptions, null);
+                    ed.findEmployee(name).inputHours(Integer.parseInt(hour));
+                }
+            }
+        }
+    }
+
+    private class UpdateEmployeeHourAction extends AbstractAction {
+
+        UpdateEmployeeHourAction() {
+            super("Update Employee Hour");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            if (ed.getNumEmployees() == 0) {
+                JOptionPane.showMessageDialog(frame, "There are no employees in the database", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                String name = (String) JOptionPane.showInputDialog(frame, "Select an employee:",
+                        "Update Employee Hour", JOptionPane.PLAIN_MESSAGE, null, ed.employeeNames().toArray(),
+                        null);
+                if (ed.findEmployee(name).hoursSize() == 0 && name != null) {
+                    JOptionPane.showMessageDialog(frame,
+                            name + " has not worked any hours yet.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    int day = (int) JOptionPane.showInputDialog(frame, "Select a day:",
+                            "Update Employee Hour", JOptionPane.PLAIN_MESSAGE, null,
+                            employeeDates(name).toArray(), null);
+
+                    Object[] hourOptions = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
+                    String hour = (String) JOptionPane.showInputDialog(frame, "Select the number of hours that "
+                                    + name + "worked today:", "Add Employee Hour", JOptionPane.PLAIN_MESSAGE,
+                            null, hourOptions, null);
+                    ed.findEmployee(name).updateHours(day, Integer.parseInt(hour));
+                }
+            }
+        }
+
+        private List<Integer> employeeDates(String name) {
+            List<Integer> dates = new ArrayList<>();
+
+            for (int i = 0; i < ed.findEmployee(name).hoursSize(); i++) {
+                dates.add(i + 1);
+            }
+
+            return dates;
+        }
+    }
+
+
+    private class GetHourAction extends AbstractAction {
+
+        GetHourAction() {
+            super("Get Employee Hours");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            if (ed.getNumEmployees() == 0) {
+                JOptionPane.showMessageDialog(frame, "There are no employees in the database", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                String name = (String) JOptionPane.showInputDialog(
+                        frame,
+                        "Select an employee:",
+                        "Get Employee Total Hours",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        ed.employeeNames().toArray(),
+                        null);
+
+                if (ed.findEmployee(name).hoursSize() == 0 && name != null) {
+                    JOptionPane.showMessageDialog(frame,
+                            name + " has not worked any hours yet.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(frame,
+                            getHoursWorkedByDay(name) + "\n" + name + "'s total hours worked: "
+                                    + ed.findEmployee(name).getHoursWorked());
+                }
+            }
+        }
+
+
+        private String getHoursWorkedByDay(String name) {
+            List<String> hoursList = new ArrayList<>();
+            for (int i = 0; i < ed.findEmployee(name).hoursSize(); i++) {
+                hoursList.add("Day " + (i + 1) + ": " + ed.findEmployee(name).getHours().get(i) + " hours");
+            }
+
+            return String.join("\n", hoursList);
+        }
+    }
 
     /**
      * Represents action to be taken when user clicks desktop
@@ -355,3 +305,52 @@ public class TimesheetAppUI extends JFrame {
         new TimesheetAppUI();
     }
 }
+
+//    /**
+//     * Adds menu bar.
+//     */
+//    private void addMenu() {
+//        JMenuBar menuBar = new JMenuBar();
+//        JMenu systemMenu = new JMenu("System");
+////        addMenuItem(systemMenu, new ChangeDateAction(),
+////                KeyStroke.getKeyStroke("control D"));
+////        addMenuItem(systemMenu, new ResetAction(),
+////                KeyStroke.getKeyStroke("control R"));
+////        addMenuItem(systemMenu, new DisplayTimesheetAction(),
+////                KeyStroke.getKeyStroke("control P"));
+////        addMenuItem(systemMenu, new QuitAndSaveAction(),
+////                KeyStroke.getKeyStroke("control Q"));
+//        menuBar.add(systemMenu);
+//
+//        JMenu employeeMenu = new JMenu("Employee");
+//        addMenuItem(employeeMenu, new AddEmployeeAction(),
+//                KeyStroke.getKeyStroke("control A"));
+//        addMenuItem(employeeMenu, new RemoveEmployeeAction(),
+//                KeyStroke.getKeyStroke("control R"));
+//        addMenuItem(employeeMenu, new ChangeEmployeeNameAction(),
+//                KeyStroke.getKeyStroke("control N"));
+////        addMenuItem(employeeMenu, new AddEmployeeHourAction(),
+////                KeyStroke.getKeyStroke("control H"));
+////        addMenuItem(employeeMenu, new UpdateEmployeeHourAction(),
+////                KeyStroke.getKeyStroke("control U"));
+////        addMenuItem(employeeMenu, new GetHourAction(),
+////                KeyStroke.getKeyStroke("control G"));
+//        menuBar.add(employeeMenu);
+//
+//        setJMenuBar(menuBar);
+//    }
+//
+//
+//    /**
+//     * Adds an item with given handler to the given menu
+//     *
+//     * @param theMenu     menu to which new item is added
+//     * @param action      handler for new menu item
+//     * @param accelerator keystroke accelerator for this menu item
+//     */
+//    private void addMenuItem(JMenu theMenu, AbstractAction action, KeyStroke accelerator) {
+//        JMenuItem menuItem = new JMenuItem(action);
+//        menuItem.setMnemonic(menuItem.getText().charAt(0));
+//        menuItem.setAccelerator(accelerator);
+//        theMenu.add(menuItem);
+//    }
