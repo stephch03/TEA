@@ -9,15 +9,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
+// Sourced from:
+// https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+// https://www.youtube.com/watch?v=5o3fMLPY7qY
+// CPSC 210 Alarm System
+// https://stackoverflow.com/questions/8852560/how-to-make-popup-window-in-java
 public class TimesheetAppUI extends JFrame {
 
 
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
     private EmployeeDatabase ed;
-    //private JComboBox<String> printCombo;
-    private JDesktopPane desktop;
-    private JInternalFrame controlPanel;
     private JFrame frame;
     private JPanel panel;
 
@@ -28,35 +29,15 @@ public class TimesheetAppUI extends JFrame {
         ed = new EmployeeDatabase();
         frame = new JFrame();
         panel = new JPanel();
-//        JButton button = new JButton("Add Employee");
-        panel.setBorder(BorderFactory.createEmptyBorder(300,500,300,500));
-        panel.setLayout(new GridLayout(0,1));
-//        panel.add(button);
-
-        desktop = new JDesktopPane();
-        desktop.addMouseListener(new DesktopFocusAction());
-        controlPanel = new JInternalFrame("Control Panel", false, false, false, false);
-        controlPanel.setLayout(new BorderLayout());
-
-        setContentPane(desktop);
-        setTitle("Timesheet Entry Application");
-        setSize(WIDTH, HEIGHT);
-
+        panel.setBorder(BorderFactory.createEmptyBorder(300, 500, 300, 500));
+        panel.setLayout(new GridLayout(0, 2));
+        frame.add(panel, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setTitle("Timesheet Entry Application");
+        frame.pack();
+        frame.setVisible(true);
         addButtonPanel();
-        addMenu();
-//        addKeyPad();
-//        addAlarmDisplayPanel();
-
-//        Remote r = new Remote(ac);
-//        addRemote(r);
-
-        controlPanel.pack();
-        controlPanel.setVisible(true);
-        desktop.add(controlPanel);
-
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        centreOnScreen();
-        setVisible(true);
+        // center on screen?
     }
 
 //    /**
@@ -73,27 +54,35 @@ public class TimesheetAppUI extends JFrame {
      */
     private void addButtonPanel() {
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(4, 2));
-        buttonPanel.add(new JButton(new AddEmployeeAction()));
-//        buttonPanel.add(new JButton(new RemoveCodeAction()));
-//        buttonPanel.add(new JButton(new ArmAction()));
-//        buttonPanel.add(new JButton(new DisarmAction()));
-//        buttonPanel.add(new JButton(new AddSensorAction()));
-//        buttonPanel.add(new JButton(new ClearLogAction()));
+        frame.setLayout(new GridLayout(4, 2));
+
+        frame.add(new JButton(new AddEmployeeAction()));
+        frame.add(new JButton(new RemoveEmployeeAction()));
+        frame.add(new JButton(new ChangeEmployeeNameAction()));
+//        frame.add(new JButton(new AddEmployeeHourAction()));
+//        frame.add(new JButton(new UpdateEmployeeHourAction()));
+//        frame.add(new JButton(new GetHourAction()));
+
+
+//        frame.add(new JButton(new ChangeDateAction()));
+//        frame.add(new JButton(new ResetAction()));
+//        frame.add(new JButton(new DisplayTimesheetAction()));
+//        frame.add(new JButton(new QuitAndSaveAction()));
+//        frame.add(new JButton(new LoadAction()));
+
+
 //        buttonPanel.add(new JButton(new PrintLogAction()));
 //        buttonPanel.add(createPrintCombo());
 
-        controlPanel.add(buttonPanel, BorderLayout.WEST);
+        panel.add(buttonPanel, BorderLayout.WEST);
     }
 
-    /**
-     * Adds menu bar.
-     */
+    //    /**
+//     * Adds menu bar.
+//     */
     private void addMenu() {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu systemMenu = new JMenu("System");
-//        systemMenu.setMnemonic('y');
 //        addMenuItem(systemMenu, new ChangeDateAction(),
 //                KeyStroke.getKeyStroke("control D"));
 //        addMenuItem(systemMenu, new ResetAction(),
@@ -105,13 +94,12 @@ public class TimesheetAppUI extends JFrame {
         menuBar.add(systemMenu);
 
         JMenu employeeMenu = new JMenu("Employee");
-//        systemMenu.setMnemonic('y');
         addMenuItem(employeeMenu, new AddEmployeeAction(),
                 KeyStroke.getKeyStroke("control A"));
-//        addMenuItem(employeeMenu, new RemoveEmployeeAction(),
-//                KeyStroke.getKeyStroke("control R"));
-//        addMenuItem(employeeMenu, new ChangeEmployeeNameAction(),
-//                KeyStroke.getKeyStroke("control N"));
+        addMenuItem(employeeMenu, new RemoveEmployeeAction(),
+                KeyStroke.getKeyStroke("control R"));
+        addMenuItem(employeeMenu, new ChangeEmployeeNameAction(),
+                KeyStroke.getKeyStroke("control N"));
 //        addMenuItem(employeeMenu, new AddEmployeeHourAction(),
 //                KeyStroke.getKeyStroke("control H"));
 //        addMenuItem(employeeMenu, new UpdateEmployeeHourAction(),
@@ -162,7 +150,7 @@ public class TimesheetAppUI extends JFrame {
     }
 
     /**
-     * Helper to add new employee
+     * Adds a new employee to the database
      */
     private class AddEmployeeAction extends AbstractAction {
 
@@ -170,8 +158,6 @@ public class TimesheetAppUI extends JFrame {
             super("Add Employee");
         }
 
-        //when click want to open popup
-        //https://stackoverflow.com/questions/8852560/how-to-make-popup-window-in-java
         @Override
         public void actionPerformed(ActionEvent evt) {
             String name = JOptionPane.showInputDialog("What is your name?", null);
@@ -181,33 +167,54 @@ public class TimesheetAppUI extends JFrame {
     }
 
     /**
+     * Removes an employee from the database
+     */
+    private class RemoveEmployeeAction extends AbstractAction {
+
+        RemoveEmployeeAction() {
+            super("Remove Employee");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            String name = (String) JOptionPane.showInputDialog(
+                    frame,
+                    "Select an employee:\"",
+                    "Remove Employee",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    ed.employeeNames().toArray(),
+                    null);
+            ed.removeEmployee(name);
+        }
+    }
+
+    /**
      * Represents the action to be taken when the user wants to add a new
      * sensor to the system.
      */
-//    private class AddSensorAction extends AbstractAction {
-//
-//        AddSensorAction() {
-//            super("Add Sensor");
-//        }
-//
-//        @Override
-//        public void actionPerformed(ActionEvent evt) {
-//            String sensorLoc = JOptionPane.showInputDialog(null,
-//                    "Sensor location?",
-//                    "Enter sensor location",
-//                    JOptionPane.QUESTION_MESSAGE);
-//            try {
-//                if (sensorLoc != null) {
-//                    Sensor s = new Sensor(sensorLoc, ac);
-//                    desktop.add(new SensorUI(s, AlarmControllerUI.this));
-//                }
-//            } catch (DuplicateSensorException e) {
-//                JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
-//    }
-//
+    private class ChangeEmployeeNameAction extends AbstractAction {
+
+        ChangeEmployeeNameAction() {
+            super("Change Employee Name");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            String name = (String) JOptionPane.showInputDialog(
+                    frame,
+                    "Select an employee:\"",
+                    "Change Employee Name",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    ed.employeeNames().toArray(),
+                    null);
+            String newName = JOptionPane.showInputDialog("Change " + name + " to:", null);
+            ed.findEmployee(name).changeName(newName);
+        }
+    }
+
+
 //    /**
 //     * Represents the action to be taken when the user wants to remove
 //     * a code from the system.
@@ -340,6 +347,7 @@ public class TimesheetAppUI extends JFrame {
         public void mouseClicked(MouseEvent e) {
             TimesheetAppUI.this.requestFocusInWindow();
         }
+
     }
 
     // starts the application
