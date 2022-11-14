@@ -7,9 +7,7 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,8 +46,34 @@ public class TimesheetAppUI extends JFrame {
         frame.setVisible(true);
         addButtonPanel();
         startAndLoad();
+        quitAndSave();
+
         // center on screen?
     }
+
+    private void quitAndSave() {
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent w) {
+                Object[] options = {"Yes", "No"};
+                int n = JOptionPane.showOptionDialog(frame,
+                        "Would you like to save your current employee database?",
+                        "Save", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+                        null);
+                if (n == JOptionPane.YES_OPTION) {
+                    try {
+                        jsonWriter.open();
+                        jsonWriter.write(ed);
+                        jsonWriter.close();
+                    } catch (FileNotFoundException e) {
+                        JOptionPane.showMessageDialog(frame, "Sorry, your timesheet could not be loaded",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+    }
+
 
     private void startAndLoad() {
         Object[] options = {"Yes", "No"};
@@ -64,7 +88,6 @@ public class TimesheetAppUI extends JFrame {
         if (n == JOptionPane.YES_OPTION) {
             try {
                 ed = jsonReader.read();
-                System.out.println("Loaded " + ed.getDate() + " timesheet from " + JSON_STORE);
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(frame,
                         "Sorry, your timesheet could not be loaded",
@@ -377,7 +400,10 @@ public class TimesheetAppUI extends JFrame {
         } catch (FileNotFoundException e) {
             System.out.println("Unable to run application: file not found");
         }
+
     }
+
+
 }
 
 //    /**
