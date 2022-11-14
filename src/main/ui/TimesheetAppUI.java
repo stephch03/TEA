@@ -97,25 +97,6 @@ public class TimesheetAppUI extends JFrame {
         }
     }
 
-//    final JOptionPane optionPane = new JOptionPane(
-//            "The only way to close this dialog is by\n"
-//                    + "pressing one of the following buttons.\n"
-//                    + "Do you understand?",
-//            JOptionPane.QUESTION_MESSAGE,
-//            JOptionPane.YES_NO_OPTION);
-//
-//    if (optionPane =)
-
-
-//    /**
-//     * Helper to set up visual alarm status window
-//     */
-//    private void addAlarmDisplayPanel() {
-//        AlarmUI alarmUI = new AlarmUI();
-//        ac.addAlarmObserver(alarmUI);
-//        controlPanel.add(alarmUI, BorderLayout.NORTH);
-//    }
-
     /**
      * Helper to add control buttons.
      */
@@ -134,8 +115,7 @@ public class TimesheetAppUI extends JFrame {
 //        frame.add(new JButton(new ChangeDateAction()));
 //        frame.add(new JButton(new ResetAction()));
 //        frame.add(new JButton(new DisplayTimesheetAction()));
-//        frame.add(new JButton(new QuitAndSaveAction()));
-//        frame.add(new JButton(new LoadAction()));
+
 
 
         panel.add(buttonPanel, BorderLayout.WEST);
@@ -166,6 +146,15 @@ public class TimesheetAppUI extends JFrame {
                     null);
             Employee e = new Employee(name);
             ed.addEmployee(e);
+
+            JOptionPane.showMessageDialog(frame,
+                    "Here are the employees currently in your database: \n" + names(),
+                    "Your employees",
+                    JOptionPane.PLAIN_MESSAGE);
+        }
+
+        private String names() {
+            return String.join("\n", ed.employeeNames());
         }
     }
 
