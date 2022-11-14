@@ -1,0 +1,23 @@
+{
+    "date": "Undated",
+    "database": [
+        {
+            "hours": [
+                6,
+                3
+            ],
+            "name": "Steph Ho"
+        },
+        {
+            "hours": [
+                7,
+                8
+            ],
+            "name": "Bob Bobby"
+        },
+        {
+            "hours": [],
+            "name": "Candy Floss"
+        }
+    ]
+}
