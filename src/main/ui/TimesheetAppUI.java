@@ -2,12 +2,16 @@ package ui;
 
 import model.Employee;
 import model.EmployeeDatabase;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +23,19 @@ import java.util.List;
 // https://stackoverflow.com/questions/8852560/how-to-make-popup-window-in-java
 public class TimesheetAppUI extends JFrame {
 
-
+    private static final String JSON_STORE = "./data/employeeDatabase.json";
     private EmployeeDatabase ed;
     private JFrame frame;
     private JPanel panel;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     /**
      * Constructor sets up button panel, key pad and visual alarm status window.
      */
-    public TimesheetAppUI() {
+    public TimesheetAppUI() throws FileNotFoundException {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         ed = new EmployeeDatabase();
         frame = new JFrame();
         panel = new JPanel();
@@ -39,8 +47,42 @@ public class TimesheetAppUI extends JFrame {
         frame.pack();
         frame.setVisible(true);
         addButtonPanel();
+        startAndLoad();
         // center on screen?
     }
+
+    private void startAndLoad() {
+        Object[] options = {"Yes", "No"};
+        int n = JOptionPane.showOptionDialog(frame,
+                "Would you like to load your previous employee database?",
+                "Load",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                null);
+        if (n == JOptionPane.YES_OPTION) {
+            try {
+                ed = jsonReader.read();
+                System.out.println("Loaded " + ed.getDate() + " timesheet from " + JSON_STORE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(frame,
+                        "Sorry, your timesheet could not be loaded",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+//    final JOptionPane optionPane = new JOptionPane(
+//            "The only way to close this dialog is by\n"
+//                    + "pressing one of the following buttons.\n"
+//                    + "Do you understand?",
+//            JOptionPane.QUESTION_MESSAGE,
+//            JOptionPane.YES_NO_OPTION);
+//
+//    if (optionPane =)
+
 
 //    /**
 //     * Helper to set up visual alarm status window
@@ -65,16 +107,13 @@ public class TimesheetAppUI extends JFrame {
         frame.add(new JButton(new UpdateEmployeeHourAction()));
         frame.add(new JButton(new GetHourAction()));
 
-
+// TODO
 //        frame.add(new JButton(new ChangeDateAction()));
 //        frame.add(new JButton(new ResetAction()));
 //        frame.add(new JButton(new DisplayTimesheetAction()));
 //        frame.add(new JButton(new QuitAndSaveAction()));
 //        frame.add(new JButton(new LoadAction()));
 
-
-//        buttonPanel.add(new JButton(new PrintLogAction()));
-//        buttonPanel.add(createPrintCombo());
 
         panel.add(buttonPanel, BorderLayout.WEST);
     }
@@ -100,7 +139,7 @@ public class TimesheetAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String name = JOptionPane.showInputDialog("Enter the FirstName LastName of the employee ",
+            String name = JOptionPane.showInputDialog("Enter the FirstName LastName of the employee:",
                     null);
             Employee e = new Employee(name);
             ed.addEmployee(e);
@@ -224,7 +263,7 @@ public class TimesheetAppUI extends JFrame {
 
                     Object[] hourOptions = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
                     String hour = (String) JOptionPane.showInputDialog(frame, "Select the number of hours that "
-                                    + name + "worked today:", "Add Employee Hour", JOptionPane.PLAIN_MESSAGE,
+                                    + name + " worked today:", "Add Employee Hour", JOptionPane.PLAIN_MESSAGE,
                             null, hourOptions, null);
                     ed.findEmployee(name).updateHours(day, Integer.parseInt(hour));
                 }
@@ -277,7 +316,6 @@ public class TimesheetAppUI extends JFrame {
             }
         }
 
-
         private String getHoursWorkedByDay(String name) {
             List<String> hoursList = new ArrayList<>();
             for (int i = 0; i < ed.findEmployee(name).hoursSize(); i++) {
@@ -287,6 +325,38 @@ public class TimesheetAppUI extends JFrame {
             return String.join("\n", hoursList);
         }
     }
+
+
+//    private class ChangeDateAction extends AbstractAction {
+//
+//        ChangeDateAction() {
+//            super("Change Timesheet Date");
+//        }
+//
+//        @Override
+//        public void actionPerformed(ActionEvent evt) {
+//            String name = (String) JOptionPane.showInputDialog(
+//                    frame,
+//                    "Select an employee:",
+//                    "Get Employee Total Hours",
+//                    JOptionPane.PLAIN_MESSAGE,
+//                    null,
+//                    ed.employeeNames().toArray(),
+//                    null);
+//
+//            if (ed.findEmployee(name).hoursSize() == 0 && name != null) {
+//                JOptionPane.showMessageDialog(frame,
+//                        name + " has not worked any hours yet.",
+//                        "Error",
+//                        JOptionPane.ERROR_MESSAGE);
+//            } else {
+//                JOptionPane.showMessageDialog(frame,
+//                        getHoursWorkedByDay(name) + "\n" + name + "'s total hours worked: "
+//                                + ed.findEmployee(name).getHoursWorked());
+//            }
+//        }
+//    }
+
 
     /**
      * Represents action to be taken when user clicks desktop
@@ -302,7 +372,11 @@ public class TimesheetAppUI extends JFrame {
 
     // starts the application
     public static void main(String[] args) {
-        new TimesheetAppUI();
+        try {
+            new TimesheetAppUI();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to run application: file not found");
+        }
     }
 }
 
