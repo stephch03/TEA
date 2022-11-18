@@ -19,6 +19,7 @@ import java.util.List;
 // https://www.youtube.com/watch?v=5o3fMLPY7qY
 // CPSC 210 Alarm System
 // https://stackoverflow.com/questions/8852560/how-to-make-popup-window-in-java
+// https://www.javatpoint.com/how-to-change-titlebar-icon-in-java-awt-swing
 // save icon from : https://publicdomainvectors.org/en/free-clipart/File-save-icon/88085.html
 public class TimesheetAppUI extends JFrame {
 
@@ -41,8 +42,8 @@ public class TimesheetAppUI extends JFrame {
         panel.setLayout(new GridLayout(0, 2));
         frame.add(panel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        Image teaIcon = Toolkit.getDefaultToolkit().getImage("C:\\Users\\steph\\IdeaProjects\\CPSC210\\"
-                + "labs\\project_w9h8b\\data\\images\\teaIcon.jpg");
+        Image teaIcon = Toolkit.getDefaultToolkit().getImage("C:\\Users\\steph\\IdeaProjects\\CPSC210\\labs\\"
+                + "project_w9h8b\\data\\images\\teapotIcon.png");
         frame.setIconImage(teaIcon);
         frame.setTitle("Timesheet Entry Application");
         frame.pack();
@@ -53,6 +54,7 @@ public class TimesheetAppUI extends JFrame {
     }
 
     // EFFECTS: helps to resize icons
+    // Sourced from https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
     private ImageIcon resizeIcon(String fileName) {
         ImageIcon imageIcon = new ImageIcon(fileName);
         Image image = imageIcon.getImage(); // transform it
@@ -79,7 +81,7 @@ public class TimesheetAppUI extends JFrame {
                         jsonWriter.write(ed);
                         jsonWriter.close();
                     } catch (FileNotFoundException e) {
-                        JOptionPane.showMessageDialog(frame, "Sorry, your timesheet could not be loaded",
+                        JOptionPane.showMessageDialog(frame, "Sorry, your timesheet could not be saved",
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
@@ -129,11 +131,12 @@ public class TimesheetAppUI extends JFrame {
     // Adds a new employee to the database
     private class AddEmployeeAction extends AbstractAction {
 
-        // EFFECTS: sets name of button
+        // EFFECTS: see super
         AddEmployeeAction() {
             super("Add Employee");
         }
 
+        // EFFECTS: see super
         @Override
         public void actionPerformed(ActionEvent evt) {
             String name = JOptionPane.showInputDialog("Enter the FirstName LastName of the employee:",
@@ -157,11 +160,12 @@ public class TimesheetAppUI extends JFrame {
     // Removes an employee from the database
     private class RemoveEmployeeAction extends AbstractAction {
 
-        // EFFECTS: sets name of button
+        // EFFECTS: see super
         RemoveEmployeeAction() {
             super("Remove Employee");
         }
 
+        // EFFECTS: see super
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (ed.getNumEmployees() == 0) {
@@ -196,11 +200,12 @@ public class TimesheetAppUI extends JFrame {
     // Changes an employee's name
     private class ChangeEmployeeNameAction extends AbstractAction {
 
-        // EFFECTS: sets name of button
+        // EFFECTS: see super
         ChangeEmployeeNameAction() {
             super("Change Employee Name");
         }
 
+        // EFFECTS: see super
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (ed.getNumEmployees() == 0) {
@@ -235,11 +240,12 @@ public class TimesheetAppUI extends JFrame {
     // Adds new hour to an employee's hours
     private class AddEmployeeHourAction extends AbstractAction {
 
-        // EFFECTS: sets name of button
+        // EFFECTS: see super
         AddEmployeeHourAction() {
             super("Add Employee Hour");
         }
 
+        // EFFECTS: see super
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (ed.getNumEmployees() == 0) {
@@ -265,11 +271,12 @@ public class TimesheetAppUI extends JFrame {
     // Updates an existing hour in the employee's hours
     private class UpdateEmployeeHourAction extends AbstractAction {
 
-        // EFFECTS: sets name of button
+        // EFFECTS: see super
         UpdateEmployeeHourAction() {
             super("Update Employee Hour");
         }
 
+        // EFFECTS: see super
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (ed.getNumEmployees() == 0) {
@@ -314,11 +321,12 @@ public class TimesheetAppUI extends JFrame {
     // Gets employee's current hours
     private class GetHourAction extends AbstractAction {
 
-        // EFFECTS: sets name of button
+        // EFFECTS: see super
         GetHourAction() {
             super("Get Employee Hours");
         }
 
+        // EFFECTS: see super
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (ed.getNumEmployees() == 0) {
@@ -357,37 +365,6 @@ public class TimesheetAppUI extends JFrame {
             return String.join("\n", hoursList);
         }
     }
-
-
-//    private class ChangeDateAction extends AbstractAction {
-//
-//        ChangeDateAction() {
-//            super("Change Timesheet Date");
-//        }
-//
-//        @Override
-//        public void actionPerformed(ActionEvent evt) {
-//            String name = (String) JOptionPane.showInputDialog(
-//                    frame,
-//                    "Select an employee:",
-//                    "Get Employee Total Hours",
-//                    JOptionPane.PLAIN_MESSAGE,
-//                    null,
-//                    ed.employeeNames().toArray(),
-//                    null);
-//
-//            if (ed.findEmployee(name).hoursSize() == 0 && name != null) {
-//                JOptionPane.showMessageDialog(frame,
-//                        name + " has not worked any hours yet.",
-//                        "Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//            } else {
-//                JOptionPane.showMessageDialog(frame,
-//                        getHoursWorkedByDay(name) + "\n" + name + "'s total hours worked: "
-//                                + ed.findEmployee(name).getHoursWorked());
-//            }
-//        }
-//    }
 
     // starts the application
     public static void main(String[] args) {

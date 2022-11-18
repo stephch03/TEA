@@ -37,8 +37,7 @@ LastName.
 - You can change the name of the employee by clicking the Change Employee Name button and selecting the name of the
 employee and typing in the new name.
 
-- My visual component is the TEA icon for my application which can be found in the top left corner of the window and as
-the desktop icon. Its resolution is scaled down so this is how it's supposed to look:
-![img.png](img.png)
+- My visual component is the teapot icon for my application which can be found in the top left corner of the window and as
+the desktop icon. TEA stands for Timesheet Entry Application.
 - You can save the state of my application by closing the window and selecting yes when prompted to save.
 - You can reload the state of my application by selecting yes when prompted to load upon running the application.
