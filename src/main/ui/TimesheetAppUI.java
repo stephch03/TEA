@@ -19,6 +19,7 @@ import java.util.List;
 // https://www.youtube.com/watch?v=5o3fMLPY7qY
 // CPSC 210 Alarm System
 // https://stackoverflow.com/questions/8852560/how-to-make-popup-window-in-java
+// save icon from : https://publicdomainvectors.org/en/free-clipart/File-save-icon/88085.html
 public class TimesheetAppUI extends JFrame {
 
     private static final String JSON_STORE = "./data/employeeDatabase.json";
@@ -28,9 +29,8 @@ public class TimesheetAppUI extends JFrame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    /**
-     * Constructor sets up button panel, key pad and visual alarm status window.
-     */
+
+    // Timesheet entry application graphical user interface
     public TimesheetAppUI() throws FileNotFoundException {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -41,16 +41,27 @@ public class TimesheetAppUI extends JFrame {
         panel.setLayout(new GridLayout(0, 2));
         frame.add(panel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Image teaIcon = Toolkit.getDefaultToolkit().getImage("C:\\Users\\steph\\IdeaProjects\\CPSC210\\"
+                + "labs\\project_w9h8b\\data\\images\\teaIcon.jpg");
+        frame.setIconImage(teaIcon);
         frame.setTitle("Timesheet Entry Application");
         frame.pack();
         frame.setVisible(true);
         addButtonPanel();
         startAndLoad();
         quitAndSave();
-
-        // center on screen?
     }
 
+    // EFFECTS: helps to resize icons
+    private ImageIcon resizeIcon(String fileName) {
+        ImageIcon imageIcon = new ImageIcon(fileName);
+        Image image = imageIcon.getImage(); // transform it
+        Image newimg = image.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(newimg);
+        return imageIcon;
+    }
+
+    // EFFECTS: handles user input to quit and/or save
     private void quitAndSave() {
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -58,7 +69,9 @@ public class TimesheetAppUI extends JFrame {
                 Object[] options = {"Yes", "No"};
                 int n = JOptionPane.showOptionDialog(frame,
                         "Would you like to save your current employee database?",
-                        "Save", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+                        "Save", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                        resizeIcon("C:\\Users\\steph\\IdeaProjects\\CPSC210\\labs\\"
+                                + "project_w9h8b\\data\\images\\saveIcon.png"), options,
                         null);
                 if (n == JOptionPane.YES_OPTION) {
                     try {
@@ -75,6 +88,7 @@ public class TimesheetAppUI extends JFrame {
     }
 
 
+    // EFFECTS: handles user input to load
     private void startAndLoad() {
         Object[] options = {"Yes", "No"};
         int n = JOptionPane.showOptionDialog(frame,
@@ -97,9 +111,7 @@ public class TimesheetAppUI extends JFrame {
         }
     }
 
-    /**
-     * Helper to add control buttons.
-     */
+    // EFFECTS: add buttons to the frame
     private void addButtonPanel() {
         JPanel buttonPanel = new JPanel();
         frame.setLayout(new GridLayout(10, 1));
@@ -111,31 +123,13 @@ public class TimesheetAppUI extends JFrame {
         frame.add(new JButton(new UpdateEmployeeHourAction()));
         frame.add(new JButton(new GetHourAction()));
 
-// TODO
-//        frame.add(new JButton(new ChangeDateAction()));
-//        frame.add(new JButton(new ResetAction()));
-//        frame.add(new JButton(new DisplayTimesheetAction()));
-
-
-
         panel.add(buttonPanel, BorderLayout.WEST);
     }
 
-
-    /**
-     * Helper to centre main application window on desktop
-     */
-    private void centreOnScreen() {
-        int width = Toolkit.getDefaultToolkit().getScreenSize().width;
-        int height = Toolkit.getDefaultToolkit().getScreenSize().height;
-        setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
-    }
-
-    /**
-     * Adds a new employee to the database
-     */
+    // Adds a new employee to the database
     private class AddEmployeeAction extends AbstractAction {
 
+        // EFFECTS: sets name of button
         AddEmployeeAction() {
             super("Add Employee");
         }
@@ -144,25 +138,26 @@ public class TimesheetAppUI extends JFrame {
         public void actionPerformed(ActionEvent evt) {
             String name = JOptionPane.showInputDialog("Enter the FirstName LastName of the employee:",
                     null);
-            Employee e = new Employee(name);
-            ed.addEmployee(e);
-
-            JOptionPane.showMessageDialog(frame,
-                    "Here are the employees currently in your database: \n" + names(),
-                    "Your employees",
-                    JOptionPane.PLAIN_MESSAGE);
+            if (name != null) {
+                Employee e = new Employee(name);
+                ed.addEmployee(e);
+                JOptionPane.showMessageDialog(frame,
+                        "Here are the employees currently in your database: \n" + names(),
+                        "Your employees",
+                        JOptionPane.PLAIN_MESSAGE);
+            }
         }
 
+        // EFFECTS: returns names of employees
         private String names() {
             return String.join("\n", ed.employeeNames());
         }
     }
 
-    /**
-     * Removes an employee from the database
-     */
+    // Removes an employee from the database
     private class RemoveEmployeeAction extends AbstractAction {
 
+        // EFFECTS: sets name of button
         RemoveEmployeeAction() {
             super("Remove Employee");
         }
@@ -184,16 +179,24 @@ public class TimesheetAppUI extends JFrame {
                         ed.employeeNames().toArray(),
                         null);
                 ed.removeEmployee(name);
+                JOptionPane.showMessageDialog(frame,
+                        "Here are the employees currently in your database: \n" + names(),
+                        "Your employees",
+                        JOptionPane.PLAIN_MESSAGE);
             }
+        }
+
+        // EFFECTS: returns names of employees
+        private String names() {
+            return String.join("\n", ed.employeeNames());
         }
     }
 
-    /**
-     * Represents the action to be taken when the user wants to add a new
-     * sensor to the system.
-     */
+
+    // Changes an employee's name
     private class ChangeEmployeeNameAction extends AbstractAction {
 
+        // EFFECTS: sets name of button
         ChangeEmployeeNameAction() {
             super("Change Employee Name");
         }
@@ -213,15 +216,26 @@ public class TimesheetAppUI extends JFrame {
                     String newName = JOptionPane.showInputDialog("Change " + name + " to:", null);
                     if (newName != null) {
                         ed.findEmployee(name).changeName(newName);
+                        JOptionPane.showMessageDialog(frame,
+                                "Here are the employees currently in your database: \n" + names(),
+                                "Your employees",
+                                JOptionPane.PLAIN_MESSAGE);
                     }
                 }
             }
         }
+
+        // EFFECTS: returns names of employees
+        private String names() {
+            return String.join("\n", ed.employeeNames());
+        }
     }
 
 
+    // Adds new hour to an employee's hours
     private class AddEmployeeHourAction extends AbstractAction {
 
+        // EFFECTS: sets name of button
         AddEmployeeHourAction() {
             super("Add Employee Hour");
         }
@@ -248,8 +262,10 @@ public class TimesheetAppUI extends JFrame {
         }
     }
 
+    // Updates an existing hour in the employee's hours
     private class UpdateEmployeeHourAction extends AbstractAction {
 
+        // EFFECTS: sets name of button
         UpdateEmployeeHourAction() {
             super("Update Employee Hour");
         }
@@ -282,6 +298,7 @@ public class TimesheetAppUI extends JFrame {
             }
         }
 
+        // EFFECTS: returns the possible day numbers associated with an employee's hours
         private List<Integer> employeeDates(String name) {
             List<Integer> dates = new ArrayList<>();
 
@@ -294,8 +311,10 @@ public class TimesheetAppUI extends JFrame {
     }
 
 
+    // Gets employee's current hours
     private class GetHourAction extends AbstractAction {
 
+        // EFFECTS: sets name of button
         GetHourAction() {
             super("Get Employee Hours");
         }
@@ -328,6 +347,7 @@ public class TimesheetAppUI extends JFrame {
             }
         }
 
+        // EFFECTS: returns current hours worked
         private String getHoursWorkedByDay(String name) {
             List<String> hoursList = new ArrayList<>();
             for (int i = 0; i < ed.findEmployee(name).hoursSize(); i++) {
@@ -369,19 +389,6 @@ public class TimesheetAppUI extends JFrame {
 //        }
 //    }
 
-
-    /**
-     * Represents action to be taken when user clicks desktop
-     * to switch focus. (Needed for key handling.)
-     */
-    private class DesktopFocusAction extends MouseAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            TimesheetAppUI.this.requestFocusInWindow();
-        }
-
-    }
-
     // starts the application
     public static void main(String[] args) {
         try {
@@ -389,57 +396,6 @@ public class TimesheetAppUI extends JFrame {
         } catch (FileNotFoundException e) {
             System.out.println("Unable to run application: file not found");
         }
-
     }
 
-
 }
-
-//    /**
-//     * Adds menu bar.
-//     */
-//    private void addMenu() {
-//        JMenuBar menuBar = new JMenuBar();
-//        JMenu systemMenu = new JMenu("System");
-////        addMenuItem(systemMenu, new ChangeDateAction(),
-////                KeyStroke.getKeyStroke("control D"));
-////        addMenuItem(systemMenu, new ResetAction(),
-////                KeyStroke.getKeyStroke("control R"));
-////        addMenuItem(systemMenu, new DisplayTimesheetAction(),
-////                KeyStroke.getKeyStroke("control P"));
-////        addMenuItem(systemMenu, new QuitAndSaveAction(),
-////                KeyStroke.getKeyStroke("control Q"));
-//        menuBar.add(systemMenu);
-//
-//        JMenu employeeMenu = new JMenu("Employee");
-//        addMenuItem(employeeMenu, new AddEmployeeAction(),
-//                KeyStroke.getKeyStroke("control A"));
-//        addMenuItem(employeeMenu, new RemoveEmployeeAction(),
-//                KeyStroke.getKeyStroke("control R"));
-//        addMenuItem(employeeMenu, new ChangeEmployeeNameAction(),
-//                KeyStroke.getKeyStroke("control N"));
-////        addMenuItem(employeeMenu, new AddEmployeeHourAction(),
-////                KeyStroke.getKeyStroke("control H"));
-////        addMenuItem(employeeMenu, new UpdateEmployeeHourAction(),
-////                KeyStroke.getKeyStroke("control U"));
-////        addMenuItem(employeeMenu, new GetHourAction(),
-////                KeyStroke.getKeyStroke("control G"));
-//        menuBar.add(employeeMenu);
-//
-//        setJMenuBar(menuBar);
-//    }
-//
-//
-//    /**
-//     * Adds an item with given handler to the given menu
-//     *
-//     * @param theMenu     menu to which new item is added
-//     * @param action      handler for new menu item
-//     * @param accelerator keystroke accelerator for this menu item
-//     */
-//    private void addMenuItem(JMenu theMenu, AbstractAction action, KeyStroke accelerator) {
-//        JMenuItem menuItem = new JMenuItem(action);
-//        menuItem.setMnemonic(menuItem.getText().charAt(0));
-//        menuItem.setAccelerator(accelerator);
-//        theMenu.add(menuItem);
-//    }
