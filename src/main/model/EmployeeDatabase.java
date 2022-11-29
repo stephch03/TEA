@@ -24,6 +24,7 @@ public class EmployeeDatabase implements Writable {
     //EFFECTS: updates the date
     public void changeDate(String newDate) {
         this.date = newDate;
+        EventLog.getInstance().logEvent(new Event("The date of the database was changed to " + newDate + "."));
     }
 
     //REQUIRES: name must be formatted as FirstName LastName
@@ -31,6 +32,7 @@ public class EmployeeDatabase implements Writable {
     //EFFECTS: adds a new employee to the database
     public void addEmployee(Employee e) {
         database.add(e);
+        EventLog.getInstance().logEvent(new Event(e.getName() + " was added to the employee database."));
     }
 
     //REQUIRES: name must be formatted as FirstName LastName
@@ -38,6 +40,7 @@ public class EmployeeDatabase implements Writable {
     //EFFECTS: removes an employee from the database
     public void removeEmployee(String name) {
         database.remove(findEmployee(name));
+        EventLog.getInstance().logEvent(new Event(name + " was removed from the employee database."));
     }
 
     //MODIFIES: this
@@ -46,6 +49,7 @@ public class EmployeeDatabase implements Writable {
         for (Employee employee : database) {
             employee.clearHours();
         }
+        EventLog.getInstance().logEvent(new Event("All employee's hours were reset."));
     }
 
     //REQUIRES: name must be formatted as FirstName LastName
@@ -65,6 +69,7 @@ public class EmployeeDatabase implements Writable {
         for (Employee e : database) {
             timesheet.add(e.getName() + ": " + e.getHours() + ", " + e.getHoursWorked() + " hours total");
         }
+        EventLog.getInstance().logEvent(new Event("The timesheet was printed."));
         return timesheet;
     }
 

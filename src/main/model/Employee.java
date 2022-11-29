@@ -22,7 +22,9 @@ public class Employee implements Writable {
     //MODIFIES: this
     //EFFECTS: sets the name of an employee
     public void changeName(String newName) {
-        name = newName;
+        String oldName = this.name;
+        this.name = newName;
+        EventLog.getInstance().logEvent(new Event(oldName + " was changed to " + newName + "."));
     }
 
     //REQUIRES: 0 <= hoursWorkedToday <= 8
@@ -30,13 +32,18 @@ public class Employee implements Writable {
     //EFFECTS: adds hours worked today to list of hours worked so far
     public void inputHours(int hoursWorkedToday) {
         hours.add(hoursWorkedToday);
+        EventLog.getInstance().logEvent(new Event(name + " worked " + hoursWorkedToday + "hours on Day "
+                + getHours().size() + "."));
     }
 
     //REQUIRES: 1 <= dayNumber <= size of hours, 0 <= newHours <= 8
     //MODIFIES: this
     //EFFECTS: changes the hours worked on the given day number of the work period
     public void updateHours(int dayNumber, int newHours) {
+        int oldHour = hours.get(dayNumber - 1);
         hours.set((dayNumber - 1), newHours);
+        EventLog.getInstance().logEvent(new Event(name + "'s Day " + dayNumber + " hours were "
+                + "changed from " + oldHour + " to " + newHours + "."));
     }
 
     //REQUIRES: hours is not empty
@@ -52,6 +59,7 @@ public class Employee implements Writable {
         for (int i = 0; i < hours.size(); i++) {
             hoursWorked += hours.get(i);
         }
+//        EventLog.getInstance().logEvent(new Event("Checked " + name + "'s current hours worked."));
         return hoursWorked;
     }
 

@@ -1,7 +1,10 @@
 package ui;
 
+import exceptions.LogException;
 import model.Employee;
 import model.EmployeeDatabase;
+import model.Event;
+import model.EventLog;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -29,6 +32,7 @@ public class TimesheetAppUI extends JFrame {
     private JPanel panel;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private EventLog log;
 
 
     // Timesheet entry application graphical user interface
@@ -46,11 +50,12 @@ public class TimesheetAppUI extends JFrame {
                 + "project_w9h8b\\data\\images\\teapotIcon.png");
         frame.setIconImage(teaIcon);
         frame.setTitle("Timesheet Entry Application");
-        frame.pack();
+
         frame.setVisible(true);
-        addButtonPanel();
         startAndLoad();
+        addButtonPanel();
         quitAndSave();
+        frame.pack();
     }
 
     // EFFECTS: helps to resize icons
@@ -85,10 +90,10 @@ public class TimesheetAppUI extends JFrame {
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
+                printLog(log);
             }
         });
     }
-
 
     // EFFECTS: handles user input to load
     private void startAndLoad() {
@@ -126,6 +131,14 @@ public class TimesheetAppUI extends JFrame {
         frame.add(new JButton(new GetHourAction()));
 
         panel.add(buttonPanel, BorderLayout.WEST);
+    }
+
+
+    public void printLog(EventLog el) {
+        el = EventLog.getInstance();
+        for (Event event : el) {
+            System.out.println(event.getDescription());
+        }
     }
 
     // Adds a new employee to the database
@@ -286,24 +299,18 @@ public class TimesheetAppUI extends JFrame {
                 String name = (String) JOptionPane.showInputDialog(frame, "Select an employee:",
                         "Update Employee Hour", JOptionPane.PLAIN_MESSAGE, null, ed.employeeNames().toArray(),
                         null);
-                if (ed.findEmployee(name).hoursSize() == 0 && name != null) {
-                    JOptionPane.showMessageDialog(frame,
-                            name + " has not worked any hours yet.",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
-                    int day = (int) JOptionPane.showInputDialog(frame, "Select a day:",
-                            "Update Employee Hour", JOptionPane.PLAIN_MESSAGE, null,
-                            employeeDates(name).toArray(), null);
+                int day = (int) JOptionPane.showInputDialog(frame, "Select a day:",
+                        "Update Employee Hour", JOptionPane.PLAIN_MESSAGE, null,
+                        employeeDates(name).toArray(), null);
 
-                    Object[] hourOptions = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
-                    String hour = (String) JOptionPane.showInputDialog(frame, "Select the number of hours that "
-                                    + name + " worked today:", "Add Employee Hour", JOptionPane.PLAIN_MESSAGE,
-                            null, hourOptions, null);
-                    ed.findEmployee(name).updateHours(day, Integer.parseInt(hour));
-                }
+                Object[] hourOptions = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
+                String hour = (String) JOptionPane.showInputDialog(frame, "Select the number of hours that "
+                                + name + " worked today:", "Add Employee Hour", JOptionPane.PLAIN_MESSAGE,
+                        null, hourOptions, null);
+                ed.findEmployee(name).updateHours(day, Integer.parseInt(hour));
             }
         }
+
 
         // EFFECTS: returns the possible day numbers associated with an employee's hours
         private List<Integer> employeeDates(String name) {
@@ -316,7 +323,6 @@ public class TimesheetAppUI extends JFrame {
             return dates;
         }
     }
-
 
     // Gets employee's current hours
     private class GetHourAction extends AbstractAction {

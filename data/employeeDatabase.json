@@ -1,25 +1,4 @@
 {
     "date": "Undated",
-    "database": [
-        {
-            "hours": [
-                6,
-                6,
-                6,
-                7
-            ],
-            "name": "Steph Ho"
-        },
-        {
-            "hours": [
-                7,
-                2
-            ],
-            "name": "Bob Bobby"
-        },
-        {
-            "hours": [],
-            "name": "Candy Floss"
-        }
-    ]
+    "database": []
 }
