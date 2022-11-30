@@ -32,7 +32,7 @@ public class Employee implements Writable {
     //EFFECTS: adds hours worked today to list of hours worked so far
     public void inputHours(int hoursWorkedToday) {
         hours.add(hoursWorkedToday);
-        EventLog.getInstance().logEvent(new Event(name + " worked " + hoursWorkedToday + "hours on Day "
+        EventLog.getInstance().logEvent(new Event(name + " worked " + hoursWorkedToday + " hours on Day "
                 + getHours().size() + "."));
     }
 
@@ -59,7 +59,6 @@ public class Employee implements Writable {
         for (int i = 0; i < hours.size(); i++) {
             hoursWorked += hours.get(i);
         }
-//        EventLog.getInstance().logEvent(new Event("Checked " + name + "'s current hours worked."));
         return hoursWorked;
     }
 

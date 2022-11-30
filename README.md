@@ -41,3 +41,20 @@ employee and typing in the new name.
 the desktop icon. TEA stands for Timesheet Entry Application.
 - You can save the state of my application by closing the window and selecting yes when prompted to save.
 - You can reload the state of my application by selecting yes when prompted to load upon running the application.
+
+## *Phase 4: Task 2*
+Sample Event log:
+
+Wed Nov 30 12:42:04 PST 2022 Steph Ho was added to the employee database.
+
+Wed Nov 30 12:42:09 PST 2022 Candy Floss was added to the employee database.
+
+Wed Nov 30 12:42:13 PST 2022 Candy Floss was removed from the employee database.
+
+Wed Nov 30 12:42:19 PST 2022 Steph Ho was changed to Stephanie Ho.
+
+Wed Nov 30 12:42:27 PST 2022 Stephanie Ho worked 6 hours on Day 1.
+
+Wed Nov 30 12:42:32 PST 2022 Stephanie Ho worked 7 hours on Day 2.
+
+Wed Nov 30 12:42:40 PST 2022 Stephanie Ho's Day 2 hours were changed from 7 to 6.

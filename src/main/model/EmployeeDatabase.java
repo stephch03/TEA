@@ -69,7 +69,6 @@ public class EmployeeDatabase implements Writable {
         for (Employee e : database) {
             timesheet.add(e.getName() + ": " + e.getHours() + ", " + e.getHoursWorked() + " hours total");
         }
-        EventLog.getInstance().logEvent(new Event("The timesheet was printed."));
         return timesheet;
     }
 

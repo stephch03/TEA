@@ -1,6 +1,6 @@
 package ui;
 
-import exceptions.LogException;
+
 import model.Employee;
 import model.EmployeeDatabase;
 import model.Event;
@@ -32,7 +32,6 @@ public class TimesheetAppUI extends JFrame {
     private JPanel panel;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
-    private EventLog log;
 
 
     // Timesheet entry application graphical user interface
@@ -90,7 +89,7 @@ public class TimesheetAppUI extends JFrame {
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-                printLog(log);
+                printLog();
             }
         });
     }
@@ -134,10 +133,9 @@ public class TimesheetAppUI extends JFrame {
     }
 
 
-    public void printLog(EventLog el) {
-        el = EventLog.getInstance();
-        for (Event event : el) {
-            System.out.println(event.getDescription());
+    public void printLog() {
+        for (Event event : EventLog.getInstance()) {
+            System.out.println(event.getDate() + " " + event.getDescription());
         }
     }
 

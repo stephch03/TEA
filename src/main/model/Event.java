@@ -43,16 +43,16 @@ public class Event {
 
     @Override
     public boolean equals(Object other) {
-        if (other == null)
+        if (other == null) {
             return false;
-
-        if (other.getClass() != this.getClass())
+        }
+        if (other.getClass() != this.getClass()) {
             return false;
-
+        }
         Event otherEvent = (Event) other;
 
-        return (this.dateLogged.equals(otherEvent.dateLogged) &&
-                this.description.equals(otherEvent.description));
+        return (this.dateLogged.equals(otherEvent.dateLogged)
+                && this.description.equals(otherEvent.description));
     }
 
     @Override
