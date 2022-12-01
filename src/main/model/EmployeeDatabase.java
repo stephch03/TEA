@@ -24,7 +24,6 @@ public class EmployeeDatabase implements Writable {
     //EFFECTS: updates the date
     public void changeDate(String newDate) {
         this.date = newDate;
-        EventLog.getInstance().logEvent(new Event("The date of the database was changed to " + newDate + "."));
     }
 
     //REQUIRES: name must be formatted as FirstName LastName
@@ -49,7 +48,6 @@ public class EmployeeDatabase implements Writable {
         for (Employee employee : database) {
             employee.clearHours();
         }
-        EventLog.getInstance().logEvent(new Event("All employee's hours were reset."));
     }
 
     //REQUIRES: name must be formatted as FirstName LastName
