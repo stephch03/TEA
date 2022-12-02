@@ -2,11 +2,17 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeTest {
 
     Employee employeeTest;
+
 
     @BeforeEach
     public void setup() {
@@ -14,6 +20,7 @@ class EmployeeTest {
         employeeTest.inputHours(5);
         employeeTest.inputHours(0);
         employeeTest.inputHours(7);
+        EventLog.getInstance().clear();
     }
 
     @Test
@@ -21,13 +28,24 @@ class EmployeeTest {
         assertEquals("Ada Lovelace", employeeTest.getName());
         assertEquals(3, employeeTest.getHours().size());
         assertEquals(12, employeeTest.getHoursWorked());
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertTrue(events.hasNext());
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertFalse(events.hasNext());
     }
+
 
     @Test
     public void changeNameTest() {
         assertEquals("Ada Lovelace", employeeTest.getName());
         employeeTest.changeName("Lily Perkins");
         assertEquals("Lily Perkins", employeeTest.getName());
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertTrue(events.hasNext());
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertTrue(events.hasNext());
+        assertEquals("Ada Lovelace was changed to Lily Perkins.", events.next().getDescription());
+        assertFalse(events.hasNext());
     }
 
     @Test
@@ -41,6 +59,13 @@ class EmployeeTest {
         assertEquals(3, employeeTest.getHours().get(3));
         assertEquals(15, employeeTest.getHoursWorked());
         assertEquals(4, employeeTest.getHours().size());
+
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertTrue(events.hasNext());
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertTrue(events.hasNext());
+        assertEquals("Ada Lovelace worked 3 hours on Day 4.", events.next().getDescription());
+        assertFalse(events.hasNext());
     }
 
     @Test
@@ -62,6 +87,13 @@ class EmployeeTest {
         assertEquals(3, employeeTest.getHours().size());
         assertEquals(2, employeeTest.getHours().get(0));
         assertEquals(9, employeeTest.getHoursWorked());
+
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertTrue(events.hasNext());
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertTrue(events.hasNext());
+        assertEquals("Ada Lovelace's Day 1 hours were changed from 5 to 2.", events.next().getDescription());
+        assertFalse(events.hasNext());
     }
 
     @Test
@@ -82,14 +114,6 @@ class EmployeeTest {
         assertEquals(10, employeeTest.getHoursWorked());
     }
 
-    @Test
-    public void toJsonTest() {
-    }
-
-    @Test
-    public void hoursToJsonTest() {
-
-    }
 
     @Test
     public void clearHoursTest() {
