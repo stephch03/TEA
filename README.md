@@ -2,7 +2,7 @@
 
 ## *Overview*
 
-I work for a small local business which still manually calculates the number of hours worked by each employee on paper.
+I know a small local business which still manually calculates the number of hours worked by each employee on paper.
 It is inefficient and also prone to calculation errors. In this day and age, the process should be digitalized.
 
 This **timesheet entry application** will allow company managers to keep track of the number of hours employees
@@ -58,3 +58,13 @@ Wed Nov 30 12:42:27 PST 2022 Stephanie Ho worked 6 hours on Day 1.
 Wed Nov 30 12:42:32 PST 2022 Stephanie Ho worked 7 hours on Day 2.
 
 Wed Nov 30 12:42:40 PST 2022 Stephanie Ho's Day 2 hours were changed from 7 to 6.
+
+## *Phase 4: Task 3*
+
+- In the console UI, TimesheetApp class, I have many
+recurring REQUIRE clauses such as for the employee database to not be empty. I would want to refactor this into
+an exception that I can throw and handle to decrease duplicated code and to improve coupling. 
+- I'd like to refactor my printTimesheet() and changeDate() method from EmployeeDatabase into a new class since the two
+methods are more specific to the timesheet. All the other methods in EmployeeDatabase are more specific to the database,
+which contains information regarding all the employees currently in the database. This will increase the cohesion
+of my classes.

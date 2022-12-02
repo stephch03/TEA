@@ -110,15 +110,6 @@ class EmployeeTest {
     }
 
     @Test
-    public void toJsonTest() {
-    }
-
-    @Test
-    public void hoursToJsonTest() {
-
-    }
-
-    @Test
     public void clearHoursTest() {
         assertEquals(3, employeeTest.getHours().size());
         employeeTest.clearHours();

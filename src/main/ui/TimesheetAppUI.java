@@ -132,8 +132,8 @@ public class TimesheetAppUI extends JFrame {
         panel.add(buttonPanel, BorderLayout.WEST);
     }
 
-
-    public void printLog() {
+    // EFFECTS: prints out the event log to the console
+    private void printLog() {
         for (Event event : EventLog.getInstance()) {
             System.out.println(event.getDate() + " " + event.getDescription());
         }
@@ -297,15 +297,22 @@ public class TimesheetAppUI extends JFrame {
                 String name = (String) JOptionPane.showInputDialog(frame, "Select an employee:",
                         "Update Employee Hour", JOptionPane.PLAIN_MESSAGE, null, ed.employeeNames().toArray(),
                         null);
-                int day = (int) JOptionPane.showInputDialog(frame, "Select a day:",
-                        "Update Employee Hour", JOptionPane.PLAIN_MESSAGE, null,
-                        employeeDates(name).toArray(), null);
+                if (ed.findEmployee(name).hoursSize() == 0 && name != null) {
+                    JOptionPane.showMessageDialog(frame,
+                            name + " has not worked any hours yet.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    int day = (int) JOptionPane.showInputDialog(frame, "Select a day:",
+                            "Update Employee Hour", JOptionPane.PLAIN_MESSAGE, null,
+                            employeeDates(name).toArray(), null);
 
-                Object[] hourOptions = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
-                String hour = (String) JOptionPane.showInputDialog(frame, "Select the number of hours that "
-                                + name + " worked today:", "Add Employee Hour", JOptionPane.PLAIN_MESSAGE,
-                        null, hourOptions, null);
-                ed.findEmployee(name).updateHours(day, Integer.parseInt(hour));
+                    Object[] hourOptions = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
+                    String hour = (String) JOptionPane.showInputDialog(frame, "Select the number of hours that "
+                                    + name + " worked today:", "Add Employee Hour", JOptionPane.PLAIN_MESSAGE,
+                            null, hourOptions, null);
+                    ed.findEmployee(name).updateHours(day, Integer.parseInt(hour));
+                }
             }
         }
 
