@@ -2,6 +2,9 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeDatabaseTest {
@@ -18,6 +21,7 @@ class EmployeeDatabaseTest {
         databaseTest.addEmployee(a);
         a.inputHours(5);
         databaseTest.addEmployee(b);
+        EventLog.getInstance().clear();
     }
 
     @Test
@@ -31,6 +35,11 @@ class EmployeeDatabaseTest {
         assertFalse(databaseTest.employeeNames().isEmpty());
         assertTrue(databaseTest.employeeNames().contains("Ada Lovelace"));
         assertTrue(databaseTest.employeeNames().contains("Bob Builder"));
+
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertTrue(events.hasNext());
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertFalse(events.hasNext());
     }
 
     @Test
@@ -48,6 +57,13 @@ class EmployeeDatabaseTest {
         assertEquals(e.getHoursWorked(), 0);
         assertEquals(0, e.getHoursWorked());
         assertEquals(3, databaseTest.getNumEmployees());
+
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertTrue(events.hasNext());
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertTrue(events.hasNext());
+        assertEquals("Emily Johnson was added to the employee database.", events.next().getDescription());
+        assertFalse(events.hasNext());
     }
 
     @Test
@@ -58,6 +74,15 @@ class EmployeeDatabaseTest {
         databaseTest.addEmployee(e);
         databaseTest.addEmployee(c);
         assertEquals(4, databaseTest.getNumEmployees());
+
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertTrue(events.hasNext());
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertTrue(events.hasNext());
+        assertEquals("Emily Johnson was added to the employee database.", events.next().getDescription());
+        assertTrue(events.hasNext());
+        assertEquals("Carla Potter was added to the employee database.", events.next().getDescription());
+        assertFalse(events.hasNext());
     }
 
     @Test
@@ -66,6 +91,13 @@ class EmployeeDatabaseTest {
         databaseTest.removeEmployee("Ada Lovelace");
         assertEquals(databaseTest.getNumEmployees(), 1);
         assertNull(databaseTest.findEmployee("Ada Lovelace"));
+
+        Iterator<Event> events = EventLog.getInstance().iterator();
+        assertTrue(events.hasNext());
+        assertEquals("Event log cleared.", events.next().getDescription());
+        assertTrue(events.hasNext());
+        assertEquals("Ada Lovelace was removed from the employee database.", events.next().getDescription());
+        assertFalse(events.hasNext());
     }
 
     @Test
