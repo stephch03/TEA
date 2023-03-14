@@ -47,7 +47,7 @@ public class JsonReader {
     }
 
     // MODIFIES: database
-    // EFFECTS: parses employees from JSON object and adds them to workroom
+    // EFFECTS: parses employees from JSON object and adds them to database
     private void addEmployees(EmployeeDatabase database, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("database");
         for (Object json : jsonArray) {
@@ -65,7 +65,7 @@ public class JsonReader {
         JSONArray hours = jsonObject.getJSONArray("hours");
         for (Object o : hours) {
             Number h = (Number) o;
-            e.getHours().add(h.intValue());
+            e.inputHours(h.intValue());
         }
     }
 }
